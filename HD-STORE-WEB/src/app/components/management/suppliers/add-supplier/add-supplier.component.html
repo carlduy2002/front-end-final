@@ -1,0 +1,56 @@
+<main style="background-color: white">
+  <div class="container" style="margin-bottom: 360px;">
+      <div class="title">Add New Supplier</div>
+      <div class="content">
+        <form [formGroup]="supplierForm">
+          <div class="user-details">
+            <div class="input-box" [class.error]="supplierForm.controls['supplier_name'].dirty && supplierForm.hasError('required', 'supplier_name')">
+              <span class="details">Supplier Name</span>
+              <input formControlName="supplier_name" type="text" placeholder="Enter supplier name" maxlength="30" required>
+              <small *ngIf="supplierForm.controls['supplier_name'].dirty && supplierForm.hasError('required', 'supplier_name')" class="text-danger">*Supplier Name is required</small>
+              <small *ngIf="supplierForm.controls['supplier_name'].hasError('max')" class="text-danger">*Max length of Supplier Name must be equal or smaller 30 characters</small>
+            </div>
+
+            <div class="input-box" [class.error]="supplierForm.controls['supplier_email'].dirty && supplierForm.hasError('required', 'supplier_email')">
+              <span class="details">Email</span>
+              <input formControlName="supplier_email" type="email" placeholder="Enter email" required>
+              <small *ngIf="supplierForm.controls['supplier_email'].dirty && supplierForm.hasError('required', 'supplier_email')" class="text-danger">*Email is required</small>
+              <small *ngIf="supplierForm.controls['supplier_email'].hasError('pattern')" class="text-danger">*Email is invalid</small>
+            </div>
+
+            <div class="input-box" [class.error]="supplierForm.controls['supplier_address'].dirty && supplierForm.hasError('required', 'supplier_address')">
+              <span class="details">Address</span>
+              <textarea formControlName="supplier_address" type="text" placeholder="Enter address" maxlength="255" required></textarea>
+              <small *ngIf="supplierForm.controls['supplier_address'].dirty && supplierForm.hasError('required', 'supplier_address')" class="text-danger">*Address is required</small>
+            </div>
+
+            <div class="input-box" [class.error]="supplierForm.controls['supplier_phone'].dirty && supplierForm.hasError('required', 'supplier_phone')">
+              <span class="details">Phone</span>
+              <input formControlName="supplier_phone" type="text" placeholder="Enter phone number" min="10" maxlength="10" required>
+              <small *ngIf="supplierForm.controls['supplier_phone'].dirty && supplierForm.hasError('required', 'supplier_phone')" class="text-danger">*Phone is required</small>
+              <small *ngIf="supplierForm.controls['supplier_phone'].hasError('min')" class="text-danger">*Phone valid include 10 positive numbers</small>
+              <small *ngIf="supplierForm.controls['supplier_phone'].hasError('pattern')" class="text-danger">*Phone is invalid</small>
+            </div>
+
+            <div class="input-box" style="margin-top: 45px;"  [class.error]="supplierForm.controls['supplier_status'].dirty && supplierForm.hasError('required', 'supplier_status')">
+              <span class="details">Status</span>
+              <select formControlName="supplier_status" id="select-option" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="font-size: 16px;">
+                <option selected value="0">Choose Supplier Status </option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+              <small *ngIf="supplierForm.controls['supplier_status'].dirty && supplierForm.hasError('required', 'supplier_status')" class="text-danger">*Supplier status is required</small>
+            </div>
+          </div>
+
+          <div style="margin-top: 20px;">
+            <a routerLink="/view-supplier" class="text-body"><i class="fa-solid fa-arrow-left" style="margin-left: 5px;"></i>  Back</a>
+          </div>
+
+          <div class="button">
+            <input (click)="addSupplier()" type="submit" value="Add">
+          </div>
+        </form>
+      </div>
+    </div>
+</main>

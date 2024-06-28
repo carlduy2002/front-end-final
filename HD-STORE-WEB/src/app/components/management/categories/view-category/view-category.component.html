@@ -1,0 +1,120 @@
+<main *ngIf="role === 'Admin'">
+  <div class="table">
+      <div class="table_header">
+          <h4>Category Management</h4>
+          <div style="display: flex;">
+              <input (keyup.enter)="search()" [(ngModel)]="searchTerm" placeholder="search..." (input)="toggleSearchButton()"/>
+              <i *ngIf="searchTerm != ''" class="fa-solid fa-magnifying-glass search-btn"  (click)="search()"></i>
+              <button routerLink="/add-category" class="add_new">+ Add New</button>
+          </div>
+      </div>
+      <div class="table_section">
+          <table>
+              <thead>
+                  <tr>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Description</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let item of lstCategory | paginate:{itemsPerPage: pageSize, currentPage: currentPage}">
+                      <td>{{item.category_id}}</td>
+                      <td>{{item.category_name}}</td>
+                      <td>{{item.category_description}}</td>
+                      <td>{{item.category_status}}</td>
+                      <td>
+                          <button (click)="getCategoryToUpdate(item.category_id)" [routerLink]="['/update-category']" routerLinkActive="router-link-active" ><i class="fa-solid fa-pen-to-square"></i></button>
+                          <button (click)="getCategory(item.category_id)" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><i class="fa-solid fa-trash"></i></button>
+                          <button *ngIf="item.category_status === 'New' && role === 'Admin'" (click)="confirmCategory(item.category_id)"><i class="fa-solid fa-check"></i></button>
+                        </td>
+                  </tr>
+              </tbody>
+          </table>
+
+          <div class="pagination"  style="float: right;">
+            <pagination-controls (pageChange)="currentPage=$event" variant="Circular"></pagination-controls>
+          </div>
+      </div>
+      <!-- <div class="pagination">
+          <div><i class="fa-solid fa-angles-left"></i></div>
+          <div><i class="fa-solid fa-chevron-left"></i></div>
+          <div>1</div>
+          <div>2</div>
+          <div><i class="fa-solid fa-angles-right"></i></div>
+          <div><i class="fa-solid fa-chevron-right"></i></div>
+      </div> -->
+  </div>
+</main>
+<main style="margin-top: 112px;" *ngIf="role === 'Manager'">
+  <div class="table">
+      <div class="table_header">
+          <h4>Category Management</h4>
+          <div style="display: flex;">
+              <input [(ngModel)]="searchTerm" placeholder="search..." (input)="toggleSearchButton()"/>
+              <i *ngIf="searchTerm != ''" class="fa-solid fa-magnifying-glass search-btn" (keyup.enter)="search()" (click)="search()"></i>
+              <button routerLink="/add-category" class="add_new">+ Add New</button>
+          </div>
+      </div>
+      <div class="table_section">
+          <table>
+              <thead>
+                  <tr>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Description</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let item of lstCategory | paginate:{itemsPerPage: pageSize, currentPage: currentPage}">
+                      <td>{{item.category_id}}</td>
+                      <td>{{item.category_name}}</td>
+                      <td>{{item.category_description}}</td>
+                      <td>{{item.category_status}}</td>
+                      <td>
+                          <button (click)="getCategoryToUpdate(item.category_id)" [routerLink]="['/update-category']" routerLinkActive="router-link-active" ><i class="fa-solid fa-pen-to-square"></i></button>
+                          <button (click)="getCategory(item.category_id)" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                  </tr>
+              </tbody>
+          </table>
+
+          <div class="pagination"  style="float: right;">
+            <pagination-controls (pageChange)="currentPage=$event" variant="Circular"></pagination-controls>
+          </div>
+      </div>
+      <!-- <div class="pagination">
+          <div><i class="fa-solid fa-angles-left"></i></div>
+          <div><i class="fa-solid fa-chevron-left"></i></div>
+          <div>1</div>
+          <div>2</div>
+          <div><i class="fa-solid fa-angles-right"></i></div>
+          <div><i class="fa-solid fa-chevron-right"></i></div>
+      </div> -->
+  </div>
+</main>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true" data-bs-dismiss="modal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Delete</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div style="margin:10px; border-radius: 5px;">
+        <div class="modal-body" style="background-color: #f8d7da;">
+          <h5>Are you sure to delete?</h5>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button style="background-color: var(--yellow-color); border: none;" id="btn-Confirm" type="button" class="btn btn-primary" (click)="deleteCategory()">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>

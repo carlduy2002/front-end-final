@@ -1,0 +1,48 @@
+<main>
+  <div class="table">
+      <div class="table_header">
+          <h4>Order History Detail</h4>
+          <div>
+              <button routerLink="/order-history" class="add_new">< Back</button>
+          </div>
+      </div>
+      <div class="table_section">
+          <table>
+              <thead>
+                  <tr>
+                      <!-- <th>Order Detail ID</th> -->
+                      <th>Order ID</th>
+                      <th>Quantity</th>
+                      <th>Product ID</th>
+                      <th>Product Image</th>
+                      <th>Product Name</th>
+                      <th>Product Price</th>
+                      <th>Size</th>
+                      <th>Category</th>
+                      <th>Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let item of lstOrderDetail | paginate:{itemsPerPage: pageSize, currentPage: currentPage}">
+                      <!-- <td>{{item.od_id}}</td> -->
+                      <td>{{item.od_order_id}}</td>
+                      <td>{{item.od_quantity}}</td>
+                      <td>{{item.od_product_id}}</td>
+                      <td (click)="getDataToView(item.product_image)" [routerLink]="['/product-details']"><img [src]="(path + item.product_image)"></td>
+                      <td>{{item.product_name}}</td>
+                      <td>${{item.product_price}}</td>
+                      <td>{{item.size_number}}</td>
+                      <td>{{item.category_name}}</td>
+                      <td>
+                        <button (click)="ReOrder(item.od_quantity, item.od_product_id)" style="background-color: rgb(74, 247, 21);" *ngIf="item.order_status === 'Delivered' || item.order_status === 'Cancelled' || item.order_status === 'Returned' || item.order_status === 'Rejected'" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-rotate-left"></i></button>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+
+          <div class="pagination"  style="float: right;">
+            <pagination-controls (pageChange)="currentPage=$event" variant="Circular"></pagination-controls>
+          </div>
+      </div>
+  </div>
+</main>

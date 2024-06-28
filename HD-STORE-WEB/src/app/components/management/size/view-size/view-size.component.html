@@ -1,0 +1,61 @@
+<main *ngIf="role === 'Admin'">
+<div class="table">
+    <div class="table_header">
+        <h4>Size Management</h4>
+        <div style="display: flex;">
+          <!-- <input [(ngModel)]="searchTerm" placeholder="search..." (input)="toggleSearchButton()"/>
+          <i *ngIf="searchTerm != ''" class="fa-solid fa-magnifying-glass search-btn" (keyup.enter)="search()" (click)="search()"></i> -->
+            <button routerLink="/add-size" class="add_new">+ Add New</button>
+        </div>
+    </div>
+    <div class="table_section">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Size Number</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of lstSize | paginate:{itemsPerPage: pageSize, currentPage: currentPage}">
+                    <td>{{item.size_id}}</td>
+                    <td>{{item.size_number}}</td>
+                    <td>{{item.size_status}}</td>
+                    <td>
+                        <button (click)="getDataToUpdate(item.size_id)" [routerLink]="['/update-size']" routerLinkActive="router-link-active" ><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button (click)="getSize(item.size_id)" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><i class="fa-solid fa-trash"></i></button>
+                     </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="pagination"  style="float: right;">
+          <pagination-controls (pageChange)="currentPage=$event" variant="Circular"></pagination-controls>
+        </div>
+    </div>
+</div>
+</main>
+
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true" data-bs-dismiss="modal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Delete</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div style="margin:10px; border-radius: 5px;">
+        <div class="modal-body" style="background-color: #f8d7da;">
+          <h5>Are you sure to delete?</h5>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button style="background-color: var(--yellow-color); border: none;" id="btn-Confirm" type="button" class="btn btn-primary" (click)="deleteSize()">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>

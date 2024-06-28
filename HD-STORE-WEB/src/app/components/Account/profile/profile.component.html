@@ -1,0 +1,279 @@
+<main *ngIf="role === 'Admin'">
+  <div class="container">
+      <div class="row flex-lg-nowrap">
+        <div class="col" style=" margin-top: 20px;">
+          <div class="row">
+            <div class="col mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="e-profile" *ngFor="let a of account">
+                    <div class="row">
+                      <div class="col-12 col-sm-auto mb-3">
+                        <div class="mx-auto" style="width: 140px; ">
+                          <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
+                            <!-- <img class="img-account-profile rounded-circle mb-2" *ngIf="a.account_avatar == undefined"
+                            src="http://bootdey.com/img/Content/avatar/avatar1.png" alt=""> -->
+
+                            <img class="img-account-profile rounded-circle mb-2"
+                            [src]="path" alt="" [hidden]="hideImage">
+
+                            <img class="avatar img-account-profile rounded-circle mb-2" *ngIf="Avatar != ''"
+                            [src]="(path + Avatar)" alt="" [hidden]="showImage">
+
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
+                        <div class="text-center text-sm-left mb-2 mb-sm-0">
+                          <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{a.account_username}}</h4>
+                          <div class="mt-2">
+                            <div class="upload-btn-wrapper">
+                              <button class="btn btn-primary" type="button" style="cursor: pointer;">
+                                <i class="fa fa-fw fa-camera"></i>
+                                Change Photo
+                                <input type="file" (change)="uploadImage($event)" style="width: 100%; height: 72%; margin-top: 18px;">
+                              </button>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <ul class="nav nav-tabs">
+                      <li class="nav-item"><a href="" class="active nav-link">Profile</a></li>
+                    </ul>
+                    <div class="tab-content pt-3">
+                      <div class="tab-pane active">
+                        <form [formGroup]="profileForm" class="form" novalidate="">
+                          <div class="row">
+                            <div class="col">
+                              <div class="row" style="margin-bottom: 20px;">
+                                <div class="col" [class.error]="profileForm.controls['email'].dirty && profileForm.hasError('required', 'email')">
+                                  <div class="form-group">
+                                    <label>Email</label>
+                                    <input formControlName="email" class="form-control form-set" type="text" name="email">
+                                    <small *ngIf="profileForm.controls['email'].dirty && profileForm.hasError('required', 'email')" class="text-danger">*Email is required</small>
+                                    <small *ngIf="profileForm.controls['email'].hasError('pattern')" class="text-danger">*Email is invalid*</small>
+                                  </div>
+                                </div>
+                                <div class="col"  [class.error]="profileForm.controls['username'].dirty && profileForm.hasError('required', 'username')">
+                                  <div class="form-group">
+                                    <label>Username</label>
+                                    <input formControlName="username" minlength="5" maxlength="20" class="form-control form-set" type="text" name="username">
+                                    <small *ngIf="profileForm.controls['username'].dirty && profileForm.hasError('required', 'username')" class="text-danger">*Username is required</small>
+                                    <small *ngIf="profileForm.controls['username'].hasError('pattern')" class="text-danger">*Username length's larger than 5 and smaller than 20 characters*</small>
+                                  </div>
+                              </div>
+                              </div>
+
+                            <div class="row" style="margin-bottom: 20px;">
+                            <div class="col">
+                                    <div class="form-group">
+                                      <label>Address</label>
+                                      <input formControlName="address" class="form-control form-set" type="text" name="address">
+                                    </div>
+                                  </div>
+                                  <div class="col" [class.error]="profileForm.controls['phone'].dirty && profileForm.hasError('required', 'phone')">
+                                    <div class="form-group">
+                                      <label>Phone Number</label>
+                                      <input formControlName="phone" minlength="10" maxlength="10" class="form-control form-set" type="text" name="phone number">
+                                      <small *ngIf="profileForm.controls['phone'].dirty && profileForm.hasError('required', 'phone')" class="text-danger">*Phone is required</small>
+                                      <small *ngIf="profileForm.controls['phone'].hasError('min')" class="text-danger">*Phone valid include 10 positive numbers</small>
+                                      <small *ngIf="profileForm.controls['phone'].hasError('pattern')" class="text-danger">*Phone is invalid*</small>
+                                    </div>
+                                  </div>
+                              </div>
+
+                              <div class="row" style="margin-bottom: 20px;">
+                                  <div class="col">
+                                    <div class="form-group">
+                                      <label>BirthDay</label>
+                                      <input (change)="birthdayChange($event)" class="form-control form-set" type="date" name="name" value="{{a.account_birthday | date : 'yyyy-MM-dd'}}">
+                                    </div>
+                                  </div>
+                              </div>
+                            </div>
+
+                            <div class="row" >
+                              <div class="gender-details">
+                                  <input type="radio" formControlName="gender" value="Male" name="gender" id="dot-1">
+                                  <input type="radio" formControlName="gender" value="Female" name="gender" id="dot-2">
+                                  <input type="radio" formControlName="gender" value="Prefer not to say" name="gender" id="dot-3">
+                                  <span class="gender-title">Gender</span>
+                                  <div class="category">
+                                    <label for="dot-1">
+                                    <span class="dot one"></span>
+                                    <span class="gender">Male</span>
+                                  </label>
+                                  <label for="dot-2">
+                                    <span class="dot two"></span>
+                                    <span class="gender">Female</span>
+                                  </label>
+                                  <label for="dot-3">
+                                    <span class="dot three"></span>
+                                    <span class="gender">Prefer not to say</span>
+                                    </label>
+                                  </div>
+                                </div>
+                            </div>
+
+                          </div>
+                          <div class="row">
+                            <div class="col d-flex justify-content-end">
+                            <button class="btn btn-primary" type="submit" (click)="saveChange()">Save Changes</button>
+                            </div>
+                          </div>
+                        </form>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      </div>
+</main>
+
+<main style="margin-top: 110px;" *ngIf="role === 'Manager' || role === 'Customer'">
+  <div class="container">
+      <div class="row flex-lg-nowrap">
+        <div class="col" style=" margin-top: 20px;">
+          <div class="row">
+            <div class="col mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="e-profile" *ngFor="let a of account">
+                    <div class="row">
+                      <div class="col-12 col-sm-auto mb-3">
+                        <div class="mx-auto" style="width: 140px; ">
+                          <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
+                            <!-- <img class="img-account-profile rounded-circle mb-2" *ngIf="a.account_avatar == undefined"
+                            src="http://bootdey.com/img/Content/avatar/avatar1.png" alt=""> -->
+
+                            <img class="img-account-profile rounded-circle mb-2"
+                            [src]="path" alt="" [hidden]="hideImage">
+
+                            <img class="avatar img-account-profile rounded-circle mb-2" *ngIf="a.account_avatar != undefined"
+                            [src]="path + a.account_avatar" alt="" [hidden]="showImage">
+
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
+                        <div class="text-center text-sm-left mb-2 mb-sm-0">
+                          <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{a.account_username}}</h4>
+                          <div class="mt-2">
+                            <div class="upload-btn-wrapper">
+                              <button class="btn btn-primary" type="button" style="cursor: pointer;">
+                                <i class="fa fa-fw fa-camera"></i>
+                                Change Photo
+                                <input type="file" (change)="uploadImage($event)" style="width: 100%; height: 72%; margin-top: 18px;">
+                              </button>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <ul class="nav nav-tabs">
+                      <li class="nav-item"><a href="" class="active nav-link">Profile</a></li>
+                    </ul>
+                    <div class="tab-content pt-3">
+                      <div class="tab-pane active">
+                        <form [formGroup]="profileForm" class="form" novalidate="">
+                          <div class="row">
+                            <div class="col">
+                              <div class="row" style="margin-bottom: 20px;">
+                                <div class="col" [class.error]="profileForm.controls['email'].dirty && profileForm.hasError('required', 'email')">
+                                  <div class="form-group">
+                                    <label>Email</label>
+                                    <input formControlName="email" class="form-control form-set" type="text" name="email">
+                                    <small *ngIf="profileForm.controls['email'].dirty && profileForm.hasError('required', 'email')" class="text-danger">*Email is required</small>
+                                    <small *ngIf="profileForm.controls['email'].hasError('pattern')" class="text-danger">*Email is invalid*</small>
+                                  </div>
+                                </div>
+                                <div class="col"  [class.error]="profileForm.controls['username'].dirty && profileForm.hasError('required', 'username')">
+                                  <div class="form-group">
+                                    <label>Username</label>
+                                    <input formControlName="username" minlength="5" maxlength="20" class="form-control form-set" type="text" name="username">
+                                    <small *ngIf="profileForm.controls['username'].dirty && profileForm.hasError('required', 'username')" class="text-danger">*Username is required</small>
+                                    <small *ngIf="profileForm.controls['username'].hasError('pattern')" class="text-danger">*Username length's larger than 5 and smaller than 20 characters*</small>
+                                  </div>
+                              </div>
+                              </div>
+
+                            <div class="row" style="margin-bottom: 20px;">
+                            <div class="col">
+                                    <div class="form-group">
+                                      <label>Address</label>
+                                      <input formControlName="address" class="form-control form-set" type="text" name="address">
+                                    </div>
+                                  </div>
+                                  <div class="col" [class.error]="profileForm.controls['phone'].dirty && profileForm.hasError('required', 'phone')">
+                                    <div class="form-group">
+                                      <label>Phone Number</label>
+                                      <input formControlName="phone" minlength="10" maxlength="10" class="form-control form-set" type="text" name="phone number">
+                                      <small *ngIf="profileForm.controls['phone'].dirty && profileForm.hasError('required', 'phone')" class="text-danger">*Phone is required</small>
+                                      <small *ngIf="profileForm.controls['phone'].hasError('min')" class="text-danger">*Phone valid include 10 positive numbers</small>
+                                      <small *ngIf="profileForm.controls['phone'].hasError('pattern')" class="text-danger">*Phone is invalid*</small>
+                                    </div>
+                                  </div>
+                              </div>
+
+                              <div class="row" style="margin-bottom: 20px;">
+                                  <div class="col">
+                                    <div class="form-group">
+                                      <label>BirthDay</label>
+                                      <input (change)="birthdayChange($event)" class="form-control form-set" type="date" name="name" value="{{a.account_birthday | date : 'yyyy-MM-dd'}}">
+                                    </div>
+                                  </div>
+                              </div>
+                            </div>
+
+                            <div class="row" >
+                              <div class="gender-details">
+                                  <input type="radio" formControlName="gender" value="Male" name="gender" id="dot-1">
+                                  <input type="radio" formControlName="gender" value="Female" name="gender" id="dot-2">
+                                  <input type="radio" formControlName="gender" value="Prefer not to say" name="gender" id="dot-3">
+                                  <span class="gender-title">Gender</span>
+                                  <div class="category">
+                                    <label for="dot-1">
+                                    <span class="dot one"></span>
+                                    <span class="gender">Male</span>
+                                  </label>
+                                  <label for="dot-2">
+                                    <span class="dot two"></span>
+                                    <span class="gender">Female</span>
+                                  </label>
+                                  <label for="dot-3">
+                                    <span class="dot three"></span>
+                                    <span class="gender">Prefer not to say</span>
+                                    </label>
+                                  </div>
+                                </div>
+                            </div>
+
+                          </div>
+                          <div class="row">
+                            <div class="col d-flex justify-content-end">
+                            <button class="btn btn-primary" type="submit" (click)="saveChange()">Save Changes</button>
+                            </div>
+                          </div>
+                        </form>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      </div>
+</main>

@@ -1,0 +1,56 @@
+<main style="background-color: white">
+  <div class="container" style="margin-bottom: 360px;">
+      <div class="title">Update Supplier</div>
+      <div class="content">
+        <form [formGroup]="supplierForm">
+          <div class="user-details">
+            <div class="input-box">
+              <span class="details">Supplier Name</span>
+              <input formControlName="supplier_name" type="text" placeholder="Name" required maxlength="30">
+              <small *ngIf="supplierForm.controls['supplier_name'].dirty && supplierForm.hasError('required', 'supplier_name')" class="text-danger">*Supplier Name is required</small>
+            </div>
+
+            <div class="input-box">
+              <span class="details">Email</span>
+              <input formControlName="supplier_email" type="email" placeholder="Email" required>
+              <small *ngIf="supplierForm.controls['supplier_email'].dirty && supplierForm.hasError('required', 'supplier_email')" class="text-danger">*Supplier Email is required</small>
+              <small *ngIf="supplierForm.controls['supplier_email'].hasError('pattern')" class="text-danger">*Email is invalid</small>
+
+            </div>
+
+            <div class="input-box">
+              <span class="details">Address</span>
+              <textarea formControlName="supplier_address" type="text" placeholder="Address" maxlength="255" required></textarea>
+              <small *ngIf="supplierForm.controls['supplier_address'].dirty && supplierForm.hasError('required', 'supplier_address')" class="text-danger">*Supplier Address is required</small>
+            </div>
+
+            <div class="input-box">
+              <span class="details">Phone Number</span>
+              <input formControlName="supplier_phone" type="phone" placeholder="Phone Number" required>
+              <small *ngIf="supplierForm.controls['supplier_phone'].dirty && supplierForm.hasError('required', 'supplier_phone')" class="text-danger">*Supplier Phone is required</small>
+              <small *ngIf="supplierForm.controls['supplier_phone'].hasError('min')" class="text-danger">*Phone valid include 10 positive numbers</small>
+              <small *ngIf="supplierForm.controls['supplier_phone'].hasError('pattern')" class="text-danger">*Phone is invalid</small>
+            </div>
+
+
+            <div class="input-box" style="margin-top: 25px;">
+              <span class="details">Status</span>
+              <select formControlName="supplier_status"  id="select-option" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="font-size: 16px;">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+              <small *ngIf="supplierForm.controls['supplier_status'].dirty && supplierForm.hasError('required', 'supplier_status')" class="text-danger">*Supplier Status is required</small>
+            </div>
+          </div>
+
+          <div>
+            <a routerLink="/view-supplier" class="text-body"><i class="fa-solid fa-arrow-left" style="margin-left: 5px;"></i>  Back</a>
+          </div>
+          <div class="button">
+            <input (click)="updateSupplier()" type="submit" value="Update">
+          </div>
+        </form>
+      </div>
+    </div>
+</main>
+

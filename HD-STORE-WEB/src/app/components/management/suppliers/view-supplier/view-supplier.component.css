@@ -1,0 +1,138 @@
+main{
+  overflow: hidden;
+  /* margin-top: 112px; */
+}
+
+h4{
+  margin-top: 8px;
+  color: var(--text-color);
+  font-weight: 600;
+}
+
+.table{
+  width: 100%;
+}
+
+.table_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 20px;
+  background-color: var(--yellow-color);
+}
+
+.table_header p{
+  color: #000000;
+}
+
+button{
+  outline: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  /* margin-left: 5px; */
+  padding: 10px;
+}
+
+td button:nth-child(1){
+  background-color: #0298cf;
+  color: white;
+  margin: 3px;
+}
+
+td button:nth-child(1):hover{
+  background-color: #3cc9fd
+}
+
+td button:nth-child(2){
+  background-color: #ff014fff;
+  color: white;
+  margin: 3px;
+}
+
+td button:nth-child(2):hover{
+  background-color: rgb(255, 120, 120);
+}
+
+.add_new{
+  padding: 10px 20px;
+  color: #ffffff;
+  /* background-color: #ff014fff; */
+  background: linear-gradient(to left, rgb(106, 104, 104) 0%, rgb(27, 27, 27) 100%);
+}
+
+.search-btn{
+  background: none;
+  margin-left: -40px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+input{
+  padding: 10px 20px;
+  margin: 0 10px;
+  outline: none;
+  border: 1px solid black;
+  border-radius: 6px;
+  color: black;
+}
+
+.table_section{
+  height: 500px;
+  /* overflow: auto; */
+}
+
+table{
+  width: 100%;
+  table-layout: fixed;
+  min-width: 1000px;
+  border-collapse: collapse;
+}
+
+thead th{
+  position: sticky;
+  top: 0;
+  background-color: #f6f9fc;
+  color: #8493a5;
+  font-size: 15px;
+}
+
+th, td{
+  border-bottom: 1px solid #dddddd;
+  padding: 10px 20px;
+  word-break: break-all;
+  text-align: center;
+}
+
+td img{
+  height: 100px;
+  width: 100px;
+  object-fit: cover;
+  border-radius: 15px;
+  border: 5px solid #ced0d2;
+}
+
+tr:hover td{
+  cursor: pointer;
+  background-color: var(--yellow-color);
+  font-size: larger;
+  color: black;
+}
+
+::placeholder{
+  color: black;
+}
+
+::-webkit-scrollbar{
+  height: 10px;
+  width: 10px;
+}
+
+::-webkit-scrollbar-track{
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+::-webkit-scrollbar-thumb{
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}

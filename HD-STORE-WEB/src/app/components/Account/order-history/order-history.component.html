@@ -1,0 +1,111 @@
+<main>
+  <div class="table">
+      <div class="table_header">
+          <h4>Order History</h4>
+          <!-- <div>
+            <input [(ngModel)]="searchTerm" placeholder="search..." (input)="toggleSearchButton()"/>
+            <i *ngIf="searchTerm != ''" class="fa-solid fa-magnifying-glass search-btn" (keyup.enter)="search()" (click)="search()"></i>
+          </div> -->
+      </div>
+      <div class="table_section">
+          <table>
+              <thead>
+                  <tr>
+                      <th>Order ID</th>
+                      <th>Order Date</th>
+                      <th>Address</th>
+                      <th>Phone</th>
+                      <th>Quantity</th>
+                      <th>Status</th>
+                      <th>Total Price</th>
+                      <th>Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let o of lstOrder | paginate:{itemsPerPage: pageSize, currentPage: currentPage}">
+                      <td>{{o.order_id}}</td>
+                      <td>{{o.order_date | date : 'yyyy-MM-dd hh-mm-ss'}}</td>
+                      <td>{{o.order_address}}</td>
+                      <td>{{o.order_phone}}</td>
+                      <td>{{o.order_quantity}}</td>
+                      <td>{{o.order_status}}</td>
+                      <td>${{o.order_total_price}}</td>
+                      <td style="display: flex;">
+                          <button style="background-color: red;" *ngIf="o.order_status === 'Pending'" (click)="Cancel(o.order_id)"><i class="fa-solid fa-rectangle-xmark"></i></button>
+                          <button style="background-color:#0298cf; color:white;" (click)="getDataToView(o.order_id)" [routerLink]="['/order-history-detail']"><i class="fa-solid fa-eye"></i></button>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+
+          <div class="pagination"  style="float: right;">
+            <pagination-controls (pageChange)="currentPage=$event" variant="Circular"></pagination-controls>
+          </div>
+      </div>
+  </div>
+</main>
+
+<!-- <div class="modal fade" #exampleModal id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="box-shadow: 20px 20px 80px rgb(218, 218, 218);">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Order Information</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group pt-3">
+          <form [formGroup]="orderForm">
+            <div class="input-field" [class.error]="orderForm.controls['order_address'].dirty && orderForm.hasError('required', 'order_address')">
+              <span><i class="fa-solid fa-location-dot"></i></span>
+                <input style="border: none;" formControlName="order_address" [(ngModel)]="AddressField" (ngModelChange)="checkValidAddress($event)" type="text" placeholder="Enter address"/>
+            </div>
+            <small *ngIf="orderForm.controls['order_address'].dirty && orderForm.hasError('required', 'order_address')" class="text-danger">*Address is required</small>
+            <small *ngIf="!isValidAddress && AddressField" >*Phone is invalid*</small>
+
+            <div class="input-field" [class.error]="orderForm.controls['order_phone'].dirty && orderForm.hasError('required', 'order_phone')">
+              <span><i class="fa-solid fa-phone"></i></span>
+                <input formControlName="order_phone" [(ngModel)]="PhoneField" (ngModelChange)="checkValidPhone($event)" type="text" style="margin-top: 5px; margin-left: 7px; border: none;" placeholder="Enter phone number" maxlength="10" />
+            </div>
+            <small *ngIf="orderForm.controls['order_phone'].dirty && orderForm.hasError('required', 'order_phone')" class="text-danger">*Phone is required</small>
+            <small *ngIf="orderForm.controls['order_phone'].hasError('pattern')" class="text-danger">*Phone is invalid</small>
+
+            <div style="margin-top: 20px;">
+              <h5 class="text-uppercase mb-3">Payment Methods</h5>
+
+              <div class="mb-4 pb-2">
+                <select class="select" (change)="onSelectPaymentMethod($event)">
+                  <option value="Cash On Delivery">Cash On Delivery</option>
+                  <option value="Cash On Banking">Cash On Banking</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <h5 class="text-uppercase mb-3">Shipping Type</h5>
+
+              <div class="mb-4 pb-2">
+                <select class="select" (change)="onSelectShipType($event)">
+                  <option value="5">Standard Delivery - $5</option>
+                  <option value="7">Express Freight Delivery - $7</option>
+                </select>
+              </div>
+            </div>
+
+
+            <div class="input-field">
+              <span><i class="fa-solid fa-note-sticky"></i></span>
+                <textarea formControlName="order_note" type="text" style="margin-left: 9px;" placeholder="Enter note"></textarea>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <ngx-paypal *ngIf="payment == true && AddressField != '' && PhoneField != '' && isValidPhone" style="width: 100%;" [config]="payPalConfig"></ngx-paypal>
+        <button *ngIf="payment == false && disabled == true" type="button" (click)="ReOrder()" class="btn btn-primary" id="payNow">Place Order</button>
+        <button *ngIf="payment == false && disabled == false" type="button" (click)="ReOrder()" class="btn btn-primary" id="payNow" disabled>Place Order</button>
+      </div>
+    </div>
+  </div>
+</div> -->

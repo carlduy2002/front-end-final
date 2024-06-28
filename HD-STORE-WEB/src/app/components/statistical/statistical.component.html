@@ -1,0 +1,54 @@
+<main>
+  <div class="table">
+      <div class="table_header">
+          <h4>Statistic Total Order In Year</h4>
+          <div style="display: flex;">
+            <form style="background-color: var(--yellow-color);" [formGroup]="statisticForm">
+              <select [(ngModel)]="selectedYear" formControlName="year" style="margin-right: 5px;" class="custom-select">
+                <!-- <option value="0" disabled selected>{{currentYear}}</option> -->
+                <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+              </select>
+
+              <button (keyup.enter)="Statistic()" (click)="Statistic()" class="add_new">Statistic</button>
+            </form>
+        </div>
+      </div>
+      <div class="table_section">
+          <table>
+              <thead>
+                  <tr>
+                      <th>Month</th>
+                      <th>Total Orders</th>
+                      <th>Number Orders Canceled</th>
+                      <th>Number Orders Delivered</th>
+                      <th>Number Orders Pending</th>
+                      <th>Number Orders Returned</th>
+                      <th>Number Orders Rejected</th>
+                      <th>Number Order Awaiting Pickup</th>
+                      <th>Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let s of statistics | paginate:{itemsPerPage: pageSize, currentPage: currentPage}">
+                      <td>{{s.month}}</td>
+                      <td>{{s.total_orders}}</td>
+                      <td>{{s.canceled_order}}</td>
+                      <td>{{s.delivered_order}}</td>
+                      <td>{{s.pending_order}}</td>
+                      <td>{{s.returned_order}}</td>
+                      <td>{{s.rejected_order}}</td>
+                      <td>{{s.awaiting_Pickup_order}}</td>
+                      <td>
+                          <button routerLink="/view-order"><i class="fa-solid fa-bars-progress"></i></button>
+                          <!-- <button><i class="fa-solid fa-circle-info"></i></button> -->
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+
+          <div class="pagination"  style="float: right;">
+            <pagination-controls (pageChange)="currentPage=$event" variant="Circular"></pagination-controls>
+          </div>
+      </div>
+  </div>
+</main>

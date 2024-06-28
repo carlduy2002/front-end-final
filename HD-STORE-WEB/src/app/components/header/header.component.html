@@ -1,0 +1,83 @@
+<main>
+  <!-- top navbar -->
+  <div class="top-navbar">
+      <p style="font-weight: 600; display: {{n}};">Hi {{fullname}} </p>
+      <p style="font-weight: 600; display: {{m}};">WELCOME TO HD-Shoe Store</p>
+      <div class="icons" style="display: flex;">
+          <a routerLink="/cart" *ngIf="role === 'Customer'"><i class="fa-solid fa-cart-shopping" alt="" width="18px" style="margin-right: 5px;"></i>Cart</a>
+          <a routerLink="/login" style="display: {{m}};"><i class="fa-solid fa-right-to-bracket"  alt="" width="18px" style="margin-right: 5px;"></i>Login</a>
+          <li ngbDropdown class="nav-item dropdown" style="list-style: none;">
+            <a ngbDropdownToggle class="nav-link dropdown-toggle" href="#" style="display: {{n}};" id="navbarDropdown" role="button"
+            data-bs-toggle="dropdown" aria-expanded="false" style="color: var(--white-color); "><i class="fa-solid fa-user"></i>
+              Me
+            </a>
+            <ul ngbDropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: var(--grey-color);">
+              <li><a ngbDropdownItem class="dropdown-item" routerLink="/profile">Profile</a></li>
+              <li><a ngbDropdownItem class="dropdown-item" routerLink="/check-old-password">Password</a></li>
+              <li><a ngbDropdownItem class="dropdown-item" *ngIf="role === 'Customer'" routerLink="/order-history">Order History</a></li>
+              <li><a ngbDropdownItem class="dropdown-item" (click)="signOut()">Log out</a></li>
+            </ul>
+          </li>
+      </div>
+  </div>
+  <!-- top navbar -->
+
+  <!-- navbar -->
+  <nav class="navbar navbar-expand-lg" id="navbar">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#" id="logo"><span id="span1">HD-Shoe</span>Store</a>
+        <button class="btn-bar navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span><i class="fa-solid fa-bars" style="color: white;" alt="" width="30px"></i></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="padding-right: 30px;">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" routerLink="">Home</a>
+            </li>
+
+            <li ngbDropdown class="nav-item dropdown" *ngIf="role === 'Manager'">
+              <a ngbDropdownToggle class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+                Management
+              </a>
+              <ul ngbDropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: var(--grey-color)">
+                <li><a ngbDropdownItem class="dropdown-item" routerLink="/view-product">Product</a></li>
+                <li><a ngbDropdownItem class="dropdown-item" routerLink="/view-category">Category</a></li>
+                <!-- <li><a ngbDropdownItem class="dropdown-item" *ngIf="role == 'Admin'" routerLink="/view-supplier">Supplier</a></li> -->
+                <li><a ngbDropdownItem class="dropdown-item" routerLink="/view-order">Order</a></li>
+                <li><a ngbDropdownItem class="dropdown-item" routerLink="/view-account">Account</a></li>
+                <!-- <li><a ngbDropdownItem class="dropdown-item" *ngIf="role == 'Admin'" routerLink="/statistical">Statistical</a></li> -->
+                <!-- <li><a ngbDropdownItem class="dropdown-item" *ngIf="role == 'Admin'" routerLink="/navbarAdmin">Admin</a></li> -->
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" *ngIf="role === 'Admin'" aria-current="page" routerLink="admin">Admin Page</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" routerLink="/product">Product</a>
+            </li>
+            <li ngbDropdown class="nav-item dropdown">
+              <a ngbDropdownToggle class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+                Category
+              </a>
+              <ul ngbDropdownMenu class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: var(--grey-color);">
+                <li *ngFor="let item of lstCategory"><a (click)="searchByCategory(item.category_name)" ngbDropdownItem style="cursor: pointer;" class="dropdown-item">{{item.category_name}}</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/about">About</a>
+            </li>
+          </ul>
+          <form style="margin-right: 10%;" [formGroup]="searchForm">
+            <div class="search-box">
+              <input (key.enter)="search()" type="text" formControlName="searchKey" [(ngModel)]="key" placeholder="Search..." aria-label="Search" (input)="toggleSearch()"/>
+              <div></div>
+              <button (click)="search()" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </nav>
+</main>

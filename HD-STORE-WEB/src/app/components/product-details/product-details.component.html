@@ -1,0 +1,63 @@
+<main>
+  <div class="container my-5">
+    <div class="row" *ngFor="let item of lstProduct">
+      <div class="col-md-5">
+          <div class="main-img">
+
+            <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig">
+              <div ngxSlickItem *ngFor="let i of lstImage" style="height: 380px;">
+                <img [src]="(path + i.image_uri)" style="display: block; border-radius: unset; height: 100%; object-fit: contain; cursor: pointer;">
+              </div>
+            </ngx-slick-carousel>
+
+          </div>
+
+          <div class="related-product" >
+            <p class="text-related-product">Related Product</p>
+            <!-- <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig">
+              <div ngxSlickItem *ngFor="let i of image" style="height: 100%;">
+                <img [src]="(path + i)" id="image-related-product" [routerLink]="['/product-details', i]">
+              </div>
+            </ngx-slick-carousel> -->
+            <div style="display: flex;">
+              <img *ngFor="let i of image" [src]="(path + i)" id="image-related-product" (click)="setImage(i)" [routerLink]="['/product-details']">
+            </div>
+          </div>
+
+      </div>
+      <div class="col-md-7">
+        <div class="main-description px-2">
+          <div class="product-title text-bold my-3">
+              {{item.product_name}}
+          </div>
+
+          <div class="price-area my-4">
+              <p class="old-price mb-1"><del>${{item.product_sell_price * 1.5}}</del></p>
+              <p class="new-price text-bold mb-1">${{item.product_sell_price}}</p>
+          </div>
+
+          <div style="display: flex;">
+            <div class="size" *ngFor="let s of lstSize" (click)="selectSize(s.sizeNumber)" [class.selected]="selectedSize === s.sizeNumber">{{s.sizeNumber}}</div>
+            <!-- <input style="margin-right: 2px; width: 25px; height: 25px;" type="checkbox" *ngFor="let s of lstSize"  [value]="s.size_number" required> -->
+          </div>
+
+          <div class="buttons d-flex my-4">
+              <div class="block">
+                  <button class="shadow btn custom-btn" *ngIf="role === 'Customer' || role === undefined" (click)="addCart()">Add to cart</button>
+              </div>
+
+              <div class="block quantity" *ngIf="role === 'Customer' || role === undefined">
+                  <input style="margin-top: 20px;" type="number" class="form-control" (change)="getQty($event)"
+                   id="cart_quantity" value="1" min="1" max="5" placeholder="Enter quantity" name="cart_quantity">
+              </div>
+          </div>
+        </div>
+
+        <div class="product-details my-4">
+            <!-- <p class="details-title text-color mb-1">{{item.product_description}}</p> -->
+            <p class="details-title text-color mb-1"[innerHTML]="productDescription"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

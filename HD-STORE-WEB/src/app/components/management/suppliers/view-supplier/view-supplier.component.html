@@ -1,0 +1,70 @@
+<main>
+  <div class="table">
+    <div class="table_header">
+      <h4>Supplier Management</h4>
+      <div style="display: flex;">
+        <input  (keyup.enter)="search()" [(ngModel)]="searchTerm" placeholder="search..." (input)="toggleSearchButton()" />
+        <i *ngIf="searchTerm != ''" class="fa-solid fa-magnifying-glass search-btn"
+          (click)="search()"></i>
+        <button routerLink="/add-supplier" class="add_new">+ Add New</button>
+      </div>
+    </div>
+    <div class="table_section">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of lstSupplier | paginate:{itemsPerPage: pageSize, currentPage: currentPage}">
+            <td>{{item.supplier_id}}</td>
+            <td>{{item.supplier_name}}</td>
+            <td>{{item.supplier_email}}</td>
+            <td>{{item.supplier_address}}</td>
+            <td>{{item.supplier_phone}}</td>
+            <td>{{item.supplier_status}}</td>
+            <td>
+              <button (click)="getDataToUpdate(item.supplier_id)" [routerLink]="['/update-supplier']" routerLinkActive="router-link-active"><i
+                  class="fa-solid fa-pen-to-square"></i></button>
+              <button (click)="getSupplierId(item.supplier_id)" data-bs-toggle="modal"
+                data-bs-target="#exampleModalCenter"><i class="fa-solid fa-trash"></i></button>
+              <!-- <button (click)="deleteSupplier(item.supplier_id)"><i class="fa-solid fa-trash"></i></button> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="pagination"  style="float: right;">
+        <pagination-controls (pageChange)="currentPage=$event" variant="Circular"></pagination-controls>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true" data-bs-dismiss="modal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Delete</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div style="margin:10px; border-radius: 5px;">
+        <div class="modal-body" style="background-color: #f8d7da;">
+          <h5>Are you sure to delete?</h5>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button style="background-color: var(--yellow-color); border: none;" id="btn-Confirm" type="button" class="btn btn-primary" (click)="deleteSupplier()">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>

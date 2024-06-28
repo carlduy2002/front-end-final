@@ -1,0 +1,13 @@
+<app-navbar-admin *ngIf="role === 'Admin'"></app-navbar-admin>
+
+<app-header *ngIf="!isLoginPage() && role != 'Admin'"></app-header>
+<router-outlet *ngIf="role != 'Admin'"></router-outlet>
+<app-footer *ngIf="!isLoginPage() && role != 'Admin'"></app-footer>
+
+<!-- <div class="wrapper">
+  <app-header *ngIf="!isLoginPage() && role != 'Admin'"></app-header>
+  <main class="content">
+    <router-outlet *ngIf="role != 'Admin'"></router-outlet>
+  </main>
+  <app-footer *ngIf="!isLoginPage() && role != 'Admin'"></app-footer>
+</div> -->

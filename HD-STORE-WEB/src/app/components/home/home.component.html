@@ -1,0 +1,94 @@
+<main>
+  <div>
+    <div>
+      <img [src]="lstImage[currentIndex]" style="width: 100%; height: 100%; border-radius: 0px;">
+    </div>
+  </div>
+
+  <div>
+    <!-- Featured Start -->
+    <div class="container-fluid pt-5">
+      <div class="row px-xl-5 pb-3">
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+          <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+            <i id="icon" class="fa-solid fa-gift"></i>
+            <h5 class="font-weight-semi-bold m-0"> Quality Product</h5>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+          <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+            <i id="icon" class="fa-solid fa-truck-fast"></i>
+            <h5 class="font-weight-semi-bold m-0"> Express Shipping</h5>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+          <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+            <i id="icon" class="fa-solid fa-arrow-right-arrow-left"></i>
+            <h5 class="font-weight-semi-bold m-0" > 7-Day Return</h5>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+          <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+            <i id="icon" class="fa-solid fa-phone-volume"></i>
+            <h5 class="font-weight-semi-bold m-0"> 24/7 Support</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Featured End -->
+  </div>
+
+  <div>
+    <div class="container" id="text">
+      <h1 class="text-center">Best Seller</h1>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3 col-sm-6" *ngFor="let item of lstProduct">
+            <div class="product-grid">
+              <div class="product-image">
+                <a href="">
+                  <img class="pic-1" [src]="(pathProduct + item.product_image)" style="object-fit: contain;">
+                </a>
+                <ul class="social">
+                  <li><a (click)="getDataToView(item.product_image)" [routerLink]="['/product-details']" data-tip="View Detail"><i
+                        class="fa fa-search"></i></a></li>
+                  <li><a data-bs-toggle="modal" data-bs-target="#exampleModalCenter" *ngIf="role === 'Customer' || role != undefined" (click)="setProName(item.product_name)" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
+
+                </ul>
+              </div>
+              <div class="product-content">
+                <h3 class="title"><a href="#">{{item.product_name}}</a></h3>
+                <div class="price">${{item.product_price}}
+                  <span>${{item.product_price * 1.5}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Please Choose Size</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div style="margin:10px; border-radius: 5px;">
+        <div class="modal-body" style="background-color: white;">
+          <div style="display: flex;">
+            <div class="size" *ngFor="let s of lstSize" (click)="selectSize(s.sizeNumber)" [class.selected]="selectedSize === s.sizeNumber">{{s.sizeNumber}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+        <button style="background-color: var(--yellow-color); border: none;" id="btn-Confirm" type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="addCart(1)">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>

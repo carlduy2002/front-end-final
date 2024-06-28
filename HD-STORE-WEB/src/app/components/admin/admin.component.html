@@ -1,0 +1,119 @@
+<div class="wrapper">
+  <div class="main">
+    <main class="content px-3 py-2">
+      <div class="container-fluid">
+        <div class="mb-3" style="display: flex;">
+
+          <!-- <h4 style="width: 28%;">Hi {{fullname}}</h4> -->
+          <div class="marquee-container">
+            <div class="marquee">
+              <h5>HD SHOE STORE</h5>
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-6 d-flex">
+            <div class="card flex-fill border-0 illustration">
+              <div class="card-body p-0 d-flex flex-fill">
+                <div class="row g-0 w-100">
+                  <div class="col-6">
+                    <div class="p-3 m-1">
+                      <h4>Welcome Back, {{fullname}}</h4>
+                      <!-- <p class="mb-0">Admin Dashboard, CodzSword</p> -->
+                    </div>
+                  </div>
+                  <!-- <div class="col-6 align-self-end text-end">
+                    <img src="image/customer-support.jpg" class="img-fluid illustration-img" alt="">
+                  </div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 d-flex">
+            <div class="card flex-fill border-0">
+              <div class="card-body py-4">
+                <div class="d-flex align-items-start">
+                  <div class="flex-grow-1" *ngFor="let r of revenue">
+                    <h4 class="mb-2">
+                      $ {{r.totalPrice}}
+                    </h4>
+                    <p class="mb-2">
+                      Total Earnings
+                    </p>
+                    <div class="mb-0">
+                      <span class="badge text-success me-2">
+                        {{r.percentageIncrease}}%
+                      </span>
+                      <span class="text-muted">
+                        Since Last Month
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex align-items-start">
+                  <form [formGroup]="statisticForm" class="flex-grow-1">
+                    <div class="user-details">
+                      <div class="input-box" style="display: flex;">
+                        <select [(ngModel)]="selectedMonth" formControlName="month" class="custom-select" >
+                          <!-- <option value="0" disabled selected>{{selectedMonth}}</option> -->
+                          <option *ngFor="let month of months" [value]="month.id">{{ month.name }}</option>
+                        </select>
+
+                        <select [(ngModel)]="selectedYear" formControlName="year" style="margin-left: 5px;" class="custom-select">
+                          <!-- <option value="0" disabled selected>Select a year</option> -->
+                          <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+                        </select>
+                        <button style="margin-left: 5px;" class="btnSort" (click)="sortRevenue()">sort</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Table Element -->
+        <div id="main">
+          <div class="container">
+            <!-- <h3>Statistics Total Order In Year</h3> -->
+
+            <form [formGroup]="statisticForm">
+              <div class="user-details" style="display: flex;">
+                <div class="input-box" style="display: flex;">
+                  <select [(ngModel)]="selectedYearOrder" formControlName="year" style="margin-left: 5px;" class="custom-select">
+                    <!-- <option value="0" disabled selected>Select a year</option> -->
+                    <option *ngFor="let year of yearsOrder" [value]="year">{{ year }}</option>
+                  </select>
+                  <button style="margin-left: 5px;" class="btnSort" (click)="sort()">sort</button>
+                </div>
+
+                <div class="input-box" style="display: flex;">
+                  <select [(ngModel)]="selectedYearProduct" formControlName="year" style="margin-left: 5px;" class="custom-select">
+                    <!-- <option value="0" disabled selected>Select a year</option> -->
+                    <option *ngFor="let year of yearsProduct" [value]="year">{{ year }}</option>
+                  </select>
+                  <button style="margin-left: 5px;" class="btnSort" (click)="bestSeller()">sort</button>
+                </div>
+              </div>
+            </form>
+
+          </div>
+          <br>
+          <div class="div-form" style="display: flex;">
+            <div class="div-chart" id="id-div-chart" style="display: block;">
+              <h5>Statistics Total Order In Year</h5>
+              <canvas id="barChart"></canvas>
+            </div>
+
+            <div class="div-chart" id="id-div-chart" style="display: block;">
+              <h5>Statistics The Best Seller</h5>
+              <canvas id="pieChart"></canvas>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

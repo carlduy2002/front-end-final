@@ -1,0 +1,182 @@
+<section class="h-100">
+    <div class="container py-5 h-100" style="overflow-y: auto;">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12">
+          <div class="card card-registration card-registration-2" style="border-radius: 15px; background-color: #dad4f5">
+            <div class="card-body p-0">
+              <div class="row g-0">
+                <div class="col-lg-8">
+                  <div class="p-5">
+                    <div class="d-flex justify-content-between align-items-center mb-5">
+                      <h1 class="fw-bold mb-0 text-black">Shopping Cart</h1>
+                      <!-- <h6 class="mb-0 text-muted">{{qtyCart}} items</h6> -->
+                    </div>
+                    <hr class="my-4">
+
+                    <div class="rollCart">
+                      <!-- <div style="display: flex;">
+                        <input [checked]="isChecked" (click)="checkAll()" *ngIf="lstCart != ''" type="checkbox" id="checkbox" name="checkbox"><p style="margin: 5px;">select all</p>
+                      </div> -->
+                      <div *ngFor="let item of lstCart" class="row mb-4 d-flex justify-content-between align-items-center" >
+                        <div class="col-md-2" style="width: 0.5%;">
+                          <!-- <label for="checkbox">{{item.isCheck}}</label> -->
+                          <input [checked]="item.isCheck === 'true' ? true : false" (click)="toggleCheckbox(item.cd_id, item.cd_cart_id, item.cd_quantity, item.cd_product_id, item.product_price)" type="checkbox" id="checkbox" name="checkbox">
+                        </div>
+                        <div class="col-md-2 col-lg-2 col-xl-2">
+                          <img
+                            [src]="(path + item.product_image)"
+                            class="img-fluid rounded-3" alt="Cotton T-shirt" id="img">
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                          <h6 class="text-muted">{{item.product_name}}</h6>
+                          <!-- <h6 class="text-black mb-0">Iphone 15</h6> -->
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                          <button class="btn btn-link px-2" (click)="minusQty(item.cd_id)" style="margin-bottom: 20px;">
+                            <i class="fas fa-minus"></i>
+                          </button>
+
+                          <input min="0" name="quantity" [value]="item.product_quantity" readonly
+                            class="form-control form-control-sm" style="width: 40px; text-align: center;" />
+
+                          <button class="btn btn-link px-2" (click)="plusQty(item.cd_id)" style="margin-bottom: 20px;">
+                            <i class="fas fa-plus"></i>
+                          </button>
+                        </div>
+
+                        <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1" style="display: flex;" id="sizeAndPrice">
+                          <h6 class="text-muted" style="margin-right: 38px; margin-left: -53px;">{{item.product_size}}</h6>
+                          <h6 class="mb-0" id="productPrice">${{item.product_price}}</h6>
+                          <a (click)="deletecart(item.cd_id)" style="cursor: pointer; margin-left: 30px;" class="text-muted"><i class="fa-solid fa-trash"></i></a>
+                        </div>
+
+
+                        <!-- <div class="col-md-1 col-lg-1 col-xl-1 text-end" style="margin-bottom: 10px;">
+                          <a (click)="deletecart(item.cd_id)" style="cursor: pointer;" class="text-muted"><i class="fa-solid fa-trash"></i></a>
+                        </div> -->
+                      </div>
+                    </div>
+
+                    <div class="pt-5" >
+                      <h6 class="mb-0"><a routerLink="/product" class="text-body"><i
+                            class="fas fa-long-arrow-alt-left me-2"></i>Back to shop</a></h6>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 bg-grey">
+                  <div class="p-5">
+                    <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
+                    <hr class="my-4">
+
+                    <div class="d-flex justify-content-between mb-4">
+                      <h5 class="text-uppercase">{{qtyCart}} items</h5>
+                      <h5 id="targetPrice"></h5>
+                    </div>
+
+                    <div>
+                      <h5 class="text-uppercase mb-3">Payment Methods</h5>
+
+                      <div class="mb-4 pb-2">
+                        <select class="select" (change)="onSelectPaymentMethod($event)">
+                          <option value="Cash On Delivery">Cash On Delivery</option>
+                          <option value="Cash On Banking">Cash On Banking</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h5 class="text-uppercase mb-3">Shipping Type</h5>
+
+                      <div class="mb-4 pb-2">
+                        <select class="select" (change)="onSelectShipType($event)">
+                          <option value="5">Standard Delivery - $5</option>
+                          <option value="7">Express Freight Delivery - $7</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <hr class="my-4">
+                    <div class="d-flex justify-content-between mb-5">
+                      <h6 class="text-uppercase">Product price</h6>
+                      <h6>${{total}}</h6>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-5" style="margin-top: -45px;">
+                      <h6 class="text-uppercase">Shipping price</h6>
+                      <h6>${{shippingType}}</h6>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-5">
+                      <h5 class="text-uppercase">Total price</h5>
+                      <h5>${{(total + (+shippingType))}}</h5>
+                    </div>
+
+                    <!-- <ngx-paypal *ngIf="payment === true" [config]="payPalConfig"></ngx-paypal> -->
+
+                    <!-- <button class="paypal-button" *ngIf="payment === true" target="_blank" data-bs-toggle="modal" data-bs-target="#exampleModal"><p id="pay">Pay</p><p id="pal">Pal</p></button> -->
+
+                    <!-- <button type="button" (click)="notify()" *ngIf="accountStatus == 'Lock'" class="btn btn-dark btn-block btn-lg" style="width: 100%;" id="btn_payment"
+                      data-mdb-ripple-color="dark">Place Order</button> -->
+
+                    <button type="button" *ngIf="lstCartOrder != ''" class="btn btn-dark btn-block btn-lg" style="width: 100%;" id="btn_payment"
+                      data-mdb-ripple-color="dark" data-bs-toggle="modal" data-bs-target="#exampleModal">Place Order</button>
+
+                    <button type="button" *ngIf="lstCartOrder == '' || lstCart == undefined" class="btn btn-dark btn-block btn-lg" style="width: 100%;" id="btn_payment"
+                      data-mdb-ripple-color="dark" data-bs-toggle="modal" data-bs-target="#exampleModal" disabled>Place Order</button>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal -->
+<div class="modal fade" #exampleModal id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="box-shadow: 20px 20px 80px rgb(218, 218, 218);">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Order Information</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group pt-3">
+          <form [formGroup]="orderForm">
+            <div class="input-field" [class.error]="orderForm.controls['order_address'].dirty && orderForm.hasError('required', 'order_address')">
+              <span><i class="fa-solid fa-location-dot"></i></span>
+                <input formControlName="order_address" [(ngModel)]="AddressField" (ngModelChange)="checkValidAddress($event)" type="text" placeholder="Enter address"/>
+            </div>
+            <small *ngIf="orderForm.controls['order_address'].dirty && orderForm.hasError('required', 'order_address')" class="text-danger">*Address is required</small>
+            <!-- <small *ngIf="!isValidAddress && AddressField" >*Phone is invalid*</small> -->
+
+            <div class="input-field" [class.error]="orderForm.controls['order_phone'].dirty && orderForm.hasError('required', 'order_phone')">
+              <span><i class="fa-solid fa-phone"></i></span>
+                <input formControlName="order_phone" [(ngModel)]="PhoneField" (ngModelChange)="checkValidPhone($event)" type="text" style="margin-top: 5px; margin-left: 7px;" placeholder="Enter phone number" maxlength="10" />
+            </div>
+            <small *ngIf="orderForm.controls['order_phone'].dirty && orderForm.hasError('required', 'order_phone')" class="text-danger">*Phone is required</small>
+            <small *ngIf="orderForm.controls['order_phone'].hasError('pattern')" class="text-danger">*Phone is invalid</small>
+            <!-- <small *ngIf="!isValidPhone && PhoneField" >*Phone is invalid*</small> -->
+
+
+            <div class="input-field">
+              <span><i class="fa-solid fa-note-sticky"></i></span>
+                <textarea formControlName="order_note" type="text" style="margin-left: 9px;" placeholder="Enter note"></textarea>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <!-- <button id="btnClose" type="button" class="btn btn-secondary" style="border: none;" data-bs-dismiss="modal">Close</button> -->
+        <ngx-paypal *ngIf="payment == true && AddressField != '' && PhoneField != '' && isValidPhone" style="width: 100%;" [config]="payPalConfig"></ngx-paypal>
+        <button *ngIf="payment == false && disabled == true" type="button" (click)="addOrder()" class="btn btn-primary" id="payNow">Place Order</button>
+        <button *ngIf="payment == false && disabled == false" type="button" (click)="addOrder()" class="btn btn-primary" id="payNow" disabled>Place Order</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<main>
+  <div class="table">
+      <div class="table_header">
+          <h4>Statistic The Best Seller</h4>
+          <div style="display: flex;">
+            <form style="background-color: var(--yellow-color);" [formGroup]="statisticForm">
+              <select [(ngModel)]="selectedYear" formControlName="year" style="margin-right: 5px;" class="custom-select">
+                <!-- <option value="0" disabled selected>Select a year</option> -->
+                <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+              </select>
+
+              <button (keyup.enter)="Statistic()" (click)="Statistic()" class="add_new">Statistic</button>
+            </form>
+        </div>
+      </div>
+      <div class="table_section">
+          <table>
+              <thead>
+                  <tr>
+                      <th>Total Turns Sale</th>
+                      <th>Image</th>
+                      <th>Name</th>
+                      <th>Price ($)</th>
+                      <th>Category</th>
+                      <th>Supplier</th>
+                      <th>Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let s of statistics | paginate:{itemsPerPage: pageSize, currentPage: currentPage}">
+                      <td>{{s.total_sale}}</td>
+                      <td><img [src]="(path + s.product_image)" id="img"></td>
+                      <td>{{s.product_name}}</td>
+                      <td>{{s.product_price}}</td>
+                      <td>{{s.category_name}}</td>
+                      <td>{{s.supplier_name}}</td>
+                      <td>
+                          <button routerLink="/view-product"><i class="fa-solid fa-bars-progress"></i></button>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+
+          <div class="pagination"  style="float: right;">
+            <pagination-controls (pageChange)="currentPage=$event" variant="Circular"></pagination-controls>
+          </div>
+      </div>
+  </div>
+</main>

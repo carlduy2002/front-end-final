@@ -1,0 +1,25 @@
+@import url('assets/css/common.css');
+@import '~ngx-toastr/toastr';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+
+}
+body{
+  min-height: 100vh;
+}
+:root{
+  --white-color: #fff;
+  --black-color: #000;
+  --text-color: #333;
+  --organ-color: #EE4D2D;
+  --border-color: #dbdbdb;
+  --yellow-color: #c9cf13;
+  --grey-color:  #6a6767;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

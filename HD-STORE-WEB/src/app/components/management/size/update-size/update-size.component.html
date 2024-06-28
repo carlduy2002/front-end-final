@@ -1,0 +1,27 @@
+<main *ngIf="role === 'Admin'" style="background-color: white">
+  <div class="container" style="margin-bottom: 360px;">
+      <div class="title">Update Size</div>
+      <div class="content">
+        <form [formGroup]="sizeForm">
+          <div class="user-details">
+            <div class="input-box" [class.error]="sizeForm.controls['size_number'].dirty && sizeForm.hasError('required', 'size_number')">
+              <span class="details">Size Number</span>
+              <input formControlName="size_number" type="text" placeholder="Enter size number"  minlength="2" maxlength="2" min="38" max="45" required>
+              <small *ngIf="sizeForm.controls['size_number'].dirty && sizeForm.hasError('required', 'size_number')" class="text-danger">*Size Number is required</small>
+              <small *ngIf="sizeForm.controls['size_number'].hasError('max')" class="text-danger">*The valid size number from 38 to 45</small>
+              <small *ngIf="sizeForm.controls['size_number'].hasError('min')" class="text-danger">*The valid size number from 38 to 45</small>
+              <small *ngIf="sizeForm.controls['size_number'].hasError('pattern')" class="text-danger">*Size number must be a positive number</small>
+            </div>
+          </div>
+
+          <div style="margin-top: 20px;">
+            <a routerLink="/view-size" class="text-body"><i class="fa-solid fa-arrow-left" style="margin-left: 5px;"></i>  Back</a>
+          </div>
+
+          <div class="button">
+            <input (click)="updateSize()" type="submit" value="Save">
+          </div>
+        </form>
+      </div>
+    </div>
+</main>

@@ -1,0 +1,198 @@
+<main *ngIf="role === 'Manager'" style="background-image: url('/assets/img/about.png'); background-repeat: no-repeat; background-position: center;
+background-size: cover;">
+    <div class="container">
+        <div class="title">Update Product</div>
+        <div class="content">
+          <form [formGroup]="productForm">
+            <div class="user-details" *ngFor="let item of lstProduct">
+              <div class="input-box">
+                <span class="details">Product Name</span>
+                <input formControlName="product_name" type="text" placeholder="Product Name" required>
+                 <small *ngIf="productForm.controls['product_name'].dirty && productForm.hasError('required', 'product_name')" class="text-danger">*Product Name is required</small>
+                 <small *ngIf="productForm.controls['product_name'].hasError('pattern')" class="text-danger">*Product name must begin by a word</small>
+              </div>
+
+              <div class="input-box" style="margin-top: 1px;">
+                <span class="details">Category</span>
+                <select formControlName="p_category_id" id="select-option" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="font-size: 16px;">
+                  <!-- <option selected style="color: #ccc;">{{p_categoryName}}</option> -->
+                  <option *ngFor="let c of lstCategory" value="{{c.category_id}}">{{c.category_name}}</option>
+                </select>
+              </div>
+
+              <div class="input-box">
+                <span class="details">Quantity</span>
+                <input formControlName="product_quantity"type="text" min="1" max="1000" maxlength="4" placeholder="Product Quantity" required>
+                <small *ngIf="productForm.controls['product_quantity'].dirty && productForm.hasError('required', 'product_quantity')" class="text-danger">*Quantity is required</small>
+                <small *ngIf="productForm.controls['product_quantity'].value > 1000" class="text-danger">*Quantity is cannot exceed 1000</small>
+                <small *ngIf="productForm.controls['product_quantity'].dirty && productForm.controls['product_quantity'].value <= 0" class="text-danger">*Quantity at least 1</small>
+                <small *ngIf="productForm.controls['product_quantity'].hasError('pattern')" class="text-danger">*Quantity must be an integer number!</small>
+              </div>
+
+              <div class="input-box" style="margin-top: 1px;">
+                <span class="details">Supplier</span>
+                <select formControlName="p_supplier_id" id="select-option" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="font-size: 16px;">
+                  <!-- <option selected style="color: #ccc;">{{p_supplierName}}</option> -->
+                  <option *ngFor="let s of lstSupplier" value="{{s.supplier_id}}">{{s.supplier_name}}</option>
+                </select>
+              </div>
+
+              <div class="input-box">
+                <span class="details">$ Original Price</span>
+                <input formControlName="product_originalPrice" type="text" min="1" max="10000" maxlength="5" placeholder="Original Price" required>
+                <small *ngIf="productForm.controls['product_originalPrice'].dirty && productForm.hasError('required', 'product_originalPrice')" class="text-danger">*Original Price is required</small>
+                <small *ngIf="productForm.controls['product_originalPrice'].value > 10000" class="text-danger">*Original Price cannot exceed 10000</small>
+                <small *ngIf="productForm.controls['product_originalPrice'].hasError('pattern')" class="text-danger">*Original price must be a positive number!</small>
+              </div>
+
+              <div class="input-box">
+                <span class="details">$ Sell Price</span>
+                <input formControlName="product_sellPrice" type="text" min="2" max="10000" maxlength="5" placeholder="Sell Price" required>
+                <small *ngIf="productForm.controls['product_sellPrice'].dirty && productForm.hasError('required', 'product_sellPrice')" class="text-danger">*Sell Price is required</small>
+                <small *ngIf="productForm.controls['product_sellPrice'].value > 10000" class="text-danger">*Sell Price cannot exceed 10000</small>
+                <small *ngIf="productForm.controls['product_sellPrice'].hasError('pattern')" class="text-danger">*Sell price must be a positive number!</small>
+              </div>
+
+              <div class="input-box">
+                <span class="details">Decription</span>
+                <textarea formControlName="product_description" placeholder="Description" maxlength="255"></textarea>
+                <!-- <small *ngIf="productForm.controls['product_description'].hasError('pattern')" class="text-danger">*Description don't allow the space</small><br> -->
+              </div>
+
+              <div class="input-box">
+                <span class="details">Upload Image</span>
+                <input [value]="p_image" type="file" multiple class="form-control" (change)="uploadImage($event)" required>
+                <img [src]="path + p_image" class="imageUpload" [hidden]="showImage">
+                <img [src]="path" class="imageUpload" [hidden]="hideImage">
+              </div>
+
+              <div class="input-box" style="margin-top: 22px;">
+                <span class="details">Status</span>
+                <select formControlName="product_status" id="select-option" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="font-size: 16px;">
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                  <!-- <option value="New">New</option>
+                  <option value="Waiting_deleted">Waiting Deleted</option> -->
+                </select>
+              </div>
+
+              <div class="input-box" style="margin-top: 22px;">
+                <span class="details">Size</span>
+                <select formControlName="p_size_id" id="select-option" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="font-size: 16px;">
+                  <!-- <option selected style="color: #ccc;">Choose Size</option> -->
+                  <option selected>{{p_productSize}}</option>
+                  <option *ngFor="let s of lstSize" value="{{s.size_id}}">{{s.size_number}}</option>
+                </select>
+              </div>
+
+            </div>
+
+            <div>
+              <a routerLink="/view-product" class="text-body"><i class="fa-solid fa-arrow-left" style="margin-left: 5px;"></i>  Back</a>
+            </div>
+            <div class="button">
+              <input (click)="updateProduct()" type="submit" value="Update">
+            </div>
+          </form>
+        </div>
+      </div>
+</main>
+
+<main *ngIf="role === 'Admin'" style="background-color: white">
+  <div class="container" style="margin-bottom: 460px;">
+      <div class="title">Update Product</div>
+      <div class="content">
+        <form [formGroup]="productForm">
+          <div class="user-details" *ngFor="let item of lstProduct">
+            <div class="input-box">
+              <span class="details">Product Name</span>
+              <input formControlName="product_name" type="text" placeholder="Product Name" required>
+               <small *ngIf="productForm.controls['product_name'].dirty && productForm.hasError('required', 'product_name')" class="text-danger">*Product Name is required</small>
+               <small *ngIf="productForm.controls['product_name'].hasError('pattern')" class="text-danger">*Product name must begin by a word</small>
+            </div>
+
+            <div class="input-box" style="margin-top: 1px;">
+              <span class="details">Category</span>
+              <select formControlName="p_category_id" id="select-option" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="font-size: 16px;">
+                <!-- <option selected style="color: #ccc;">{{p_categoryName}}</option> -->
+                <option *ngFor="let c of lstCategory" value="{{c.category_id}}">{{c.category_name}}</option>
+              </select>
+            </div>
+
+            <div class="input-box">
+              <span class="details">Quantity</span>
+              <input formControlName="product_quantity" type="text" min="1" max="1000" maxlength="4" placeholder="Product Quantity" required>
+              <small *ngIf="productForm.controls['product_quantity'].dirty && productForm.hasError('required', 'product_quantity')" class="text-danger">*Quantity is required</small>
+              <small *ngIf="productForm.controls['product_quantity'].value > 1000" class="text-danger">*Quantity is cannot exceed 1000</small>
+              <small *ngIf="productForm.controls['product_quantity'].dirty && productForm.controls['product_quantity'].value <= 0" class="text-danger">*Quantity at least 1</small>
+              <small *ngIf="productForm.controls['product_quantity'].hasError('pattern')" class="text-danger">*Quantity must be an integer number!</small>
+            </div>
+
+            <div class="input-box" style="margin-top: 1px;">
+              <span class="details">Supplier</span>
+              <select formControlName="p_supplier_id" id="select-option" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="font-size: 16px;">
+                <!-- <option selected style="color: #ccc;">{{p_supplierName}}</option> -->
+                <option *ngFor="let s of lstSupplier" value="{{s.supplier_id}}">{{s.supplier_name}}</option>
+              </select>
+            </div>
+
+            <div class="input-box">
+              <span class="details">$ Original Price</span>
+              <input formControlName="product_originalPrice" type="text" min="1" max="10000" maxlength="5" placeholder="Original Price" required>
+              <small *ngIf="productForm.controls['product_originalPrice'].dirty && productForm.hasError('required', 'product_originalPrice')" class="text-danger">*Original Price is required</small>
+              <small *ngIf="productForm.controls['product_originalPrice'].value > 10000" class="text-danger">*Original Price cannot exceed 10000</small>
+              <small *ngIf="productForm.controls['product_originalPrice'].hasError('pattern')" class="text-danger">*Original price must be a positive number!</small>
+            </div>
+
+            <div class="input-box">
+              <span class="details">$ Sell Price</span>
+              <input formControlName="product_sellPrice" type="text" min="2" max="10000" maxlength="5" placeholder="Sell Price" required>
+              <small *ngIf="productForm.controls['product_sellPrice'].dirty && productForm.hasError('required', 'product_sellPrice')" class="text-danger">*Sell Price is required</small>
+              <small *ngIf="productForm.controls['product_sellPrice'].value > 10000" class="text-danger">*Sell Price cannot exceed 10000</small>
+              <small *ngIf="productForm.controls['product_sellPrice'].hasError('pattern')" class="text-danger">*Sell price must be a positive number!</small>
+            </div>
+
+            <div class="input-box">
+              <span class="details">Decription</span>
+              <textarea formControlName="product_description" placeholder="Description" maxlength="255"></textarea>
+              <!-- <small *ngIf="productForm.controls['product_description'].hasError('pattern')" class="text-danger">*Description don't allow the space</small><br> -->
+            </div>
+
+            <div class="input-box">
+              <span class="details">Upload Image</span>
+              <input [value]="p_image" type="file" multiple class="form-control" (change)="uploadImage($event)" required>
+              <img [src]="path + p_image" class="imageUpload" [hidden]="showImage">
+              <img [src]="path" class="imageUpload" [hidden]="hideImage">
+            </div>
+
+            <div class="input-box" style="margin-top: 22px;">
+              <span class="details">Status</span>
+              <select formControlName="product_status" id="select-option" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="font-size: 16px;">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <!-- <option value="New">New</option>
+                <option value="Waiting_deleted">Waiting Deleted</option> -->
+              </select>
+            </div>
+
+            <div class="input-box" style="margin-top: 22px;">
+              <span class="details">Size</span>
+              <select formControlName="p_size_id" id="select-option" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="font-size: 16px;">
+                <!-- <option selected style="color: #ccc;">Choose Size</option> -->
+                <!-- <option selected>{{p_productSize}}</option> -->
+                <option *ngFor="let s of lstSize" value="{{s.size_id}}">{{s.size_number}}</option>
+              </select>
+            </div>
+
+          </div>
+
+          <div>
+            <a routerLink="/view-product" class="text-body"><i class="fa-solid fa-arrow-left" style="margin-left: 5px;"></i>  Back</a>
+          </div>
+          <div class="button">
+            <input (click)="updateProduct()" type="submit" value="Update">
+          </div>
+        </form>
+      </div>
+    </div>
+</main>

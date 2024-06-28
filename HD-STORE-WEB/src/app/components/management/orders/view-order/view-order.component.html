@@ -1,0 +1,151 @@
+<main *ngIf="role === 'Admin'">
+  <div class="table">
+      <div class="table_header">
+          <h4>Order Management</h4>
+          <div>
+            <input (keyup.enter)="search()" [(ngModel)]="searchTerm" placeholder="search..." (input)="toggleSearchButton()"/>
+            <!-- /<i *ngIf="searchTerm != ''" class="fa-solid fa-magnifying-glass search-btn" (keyup.enter)="search()" (click)="search()"></i> -->
+            <button class="add_new"  (click)="search()">Search Order</button>
+          </div>
+      </div>
+      <div class="table_section">
+          <table>
+              <thead>
+                  <tr>
+                      <th>Order ID</th>
+                      <th>Order Date</th>
+                      <th>Delivery Date</th>
+                      <th>Address</th>
+                      <th>Phone</th>
+                      <th>Quantity</th>
+                      <th>Note</th>
+                      <th>Payment</th>
+                      <th>Status</th>
+                      <!-- <th>Account ID</th> -->
+                      <th>Account Name</th>
+                      <th>Total Price</th>
+                      <th>Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let item of lstOrder | paginate:{itemsPerPage: pageSize, currentPage: currentPage}">
+                      <td>{{item.order_id}}</td>
+                      <td>{{item.order_date | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
+                      <td>{{item.delivery_date | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
+                      <td>{{item.order_address}}</td>
+                      <td>{{item.order_phone}}</td>
+                      <td>{{item.order_quantity}}</td>
+                      <td>{{item.order_note}}</td>
+                      <td>{{item.order_payment}}</td>
+                      <td>{{item.order_status}}</td>
+                      <!-- <td>{{item.o_account_id}}</td> -->
+                      <td>{{item.account_name}}</td>
+                      <td>${{item.order_total_price}}</td>
+                      <td>
+                        <button *ngIf="item.order_status === 'Pending'" (click)="confirmOrder(item.order_id)" routerLinkActive="router-link-active" style="background-color: #2fe951;"><i class="fa-solid fa-check"></i></button>
+                        <button *ngIf="item.order_status === 'Awaiting_Pickup'" (click)="rejectOrder(item.order_id)" routerLinkActive="router-link-active" style="background-color: #d654a9;"><i class="fa-solid fa-face-sad-tear"></i></button>
+                        <button *ngIf="item.order_status === 'Awaiting_Pickup'" (click)="deliveredOrder(item.order_id)" routerLinkActive="router-link-active" style="background-color: #5b4cd3;"><i class="fa-solid fa-hourglass-start"></i></button>
+                        <button *ngIf="item.order_status === 'Delivered'" (click)="returnOrder(item.order_id)" routerLinkActive="router-link-active" style="background-color: #956882;"><i class="fa-solid fa-rotate-left"></i></button>
+                        <button (click)="getDataToView(item.order_id)" [routerLink]="['/view-order-detail']" style="background-color: #0298cf; color: white;"><i class="fa-solid fa-eye"></i></button>
+                        <button style="background-color: red;" *ngIf="item.order_status === 'Pending' || item.order_status === 'Awaiting_Pickup'" (click)="getOrderID(item.order_id)" data-bs-toggle="modal" data-bs-target="#exampleModal"><i style="color: white;" class="fa-solid fa-rectangle-xmark"></i></button>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+
+          <div class="pagination"  style="float: right;">
+            <pagination-controls (pageChange)="currentPage=$event" variant="Circular"></pagination-controls>
+          </div>
+      </div>
+  </div>
+</main>
+
+<main style="margin-top: 112px;" *ngIf="role === 'Manager'">
+  <div class="table">
+      <div class="table_header">
+          <h4>Order Management</h4>
+          <div>
+            <input [(ngModel)]="searchTerm" placeholder="search..." (keyup.enter)="search()" (input)="toggleSearchButton()"/>
+            <!-- /<i *ngIf="searchTerm != ''" class="fa-solid fa-magnifying-glass search-btn" (keyup.enter)="search()" (click)="search()"></i> -->
+            <button class="add_new" (click)="search()">Search Order</button>
+          </div>
+      </div>
+      <div class="table_section">
+          <table>
+              <thead>
+                  <tr>
+                      <th>Order ID</th>
+                      <th>Order Date</th>
+                      <th>Delivery Date</th>
+                      <th>Address</th>
+                      <th>Phone</th>
+                      <th>Quantity</th>
+                      <th>Note</th>
+                      <th>Payment</th>
+                      <th>Status</th>
+                      <!-- <th>Account ID</th> -->
+                      <th>Account Name</th>
+                      <th>Total Price</th>
+                      <th>Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let item of lstOrder | paginate:{itemsPerPage: pageSize, currentPage: currentPage}">
+                      <td>{{item.order_id}}</td>
+                      <td>{{item.order_date | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
+                      <td>{{item.delivery_date | date : 'yyyy-MM-dd hh:mm:ss'}}</td>
+                      <td>{{item.order_address}}</td>
+                      <td>{{item.order_phone}}</td>
+                      <td>{{item.order_quantity}}</td>
+                      <td>{{item.order_note}}</td>
+                      <td>{{item.order_payment}}</td>
+                      <td>{{item.order_status}}</td>
+                      <!-- <td>{{item.o_account_id}}</td> -->
+                      <td>{{item.account_name}}</td>
+                      <td>${{item.order_total_price}}</td>
+                      <td>
+                          <button *ngIf="item.order_status === 'Pending'" (click)="confirmOrder(item.order_id)" routerLinkActive="router-link-active" style="background-color: #2fe951;"><i class="fa-solid fa-check"></i></button>
+                          <button *ngIf="item.order_status === 'Awaiting_Pickup'" (click)="rejectOrder(item.order_id)" routerLinkActive="router-link-active" style="background-color: #d654a9;"><i class="fa-solid fa-face-sad-tear"></i></button>
+                          <button *ngIf="item.order_status === 'Awaiting_Pickup'" (click)="deliveredOrder(item.order_id)" routerLinkActive="router-link-active" style="background-color: #5b4cd3;"><i class="fa-solid fa-hourglass-start"></i></button>
+                          <button *ngIf="item.order_status === 'Delivered' && currentDate <= calculateFutureDate(item.order_date)" (click)="returnOrder(item.order_id)" routerLinkActive="router-link-active" style="background-color: #956882;"><i class="fa-solid fa-rotate-left"></i></button>
+                          <button (click)="getDataToView(item.order_id)" [routerLink]="['/view-order-detail']" style="background-color: #0298cf; color: white;"><i class="fa-solid fa-eye"></i></button>
+                          <button style="background-color: red;" *ngIf="item.order_status === 'Pending' || item.order_status === 'Awaiting_Pickup'" (click)="getOrderID(item.order_id)" data-bs-toggle="modal" data-bs-target="#exampleModal"><i style="color: white;" class="fa-solid fa-rectangle-xmark"></i></button>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+          <div class="pagination"  style="float: right;">
+            <pagination-controls (pageChange)="currentPage=$event" variant="Circular"></pagination-controls>
+          </div>
+      </div>
+  </div>
+</main>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="box-shadow: 20px 20px 80px rgb(218, 218, 218);">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Cancel Order Content</h5>
+        <!-- <p>Please, provide your E-mail we will send the reset link</p> -->
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group pt-3">
+          <div class="input-field">
+            <!-- <span class="fa fa-envelope"></span> -->
+            <!-- <input [(ngModel)]="cancelContent" type="text"
+              placeholder="Content..."> -->
+              <textarea [(ngModel)]="cancelContent" type="text" name="" id="" cols="30" rows="10"placeholder="Content..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="btnClose" type="button" class="btn btn-secondary" style="border: none;" data-bs-dismiss="modal">Close</button>
+        <button *ngIf="disable == false" type="button" class="btn btn-primary" style="background: var(--yellow-color); border: none;" (click)="Cancel()">Send</button>
+        <button *ngIf="disable == true" type="button" class="btn btn-primary" style="background: var(--yellow-color); border: none;" disabled (click)="Cancel()">Send</button>
+      </div>
+    </div>
+  </div>
+</div>

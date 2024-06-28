@@ -1,0 +1,161 @@
+<!-- <main>
+    <div class="container">
+        <div class="title">Registration</div>
+        <div class="content">
+          <form [formGroup]="registerForm">
+            <div class="user-details">
+              <div class="input-box underline" [class.error]="registerForm.controls['username'].dirty && registerForm.hasError('required', 'username')">
+                <span class="details">Username</span>
+                <input formControlName="username" type="text" placeholder="Enter your username" required>
+                <small *ngIf="registerForm.controls['username'].dirty && registerForm.hasError('required', 'username')" >*Username is required</small>
+              </div>
+
+              <div class="input-box underline">
+                <span class="details">Address</span>
+                <input type="text" placeholder="Enter your address" required>
+              </div>
+
+              <div class="input-box underline" [class.error]="registerForm.controls['email'].dirty && registerForm.hasError('required', 'email')">
+                <span class="details">Email</span>
+                <input formControlName="email" type="text" placeholder="Enter your email" required>
+                <small *ngIf="registerForm.controls['email'].dirty && registerForm.hasError('required', 'email')" >*Email is required</small>
+              </div>
+
+              <div class="input-box underline" [class.error]="registerForm.controls['phone'].dirty && registerForm.hasError('required', 'phone')">
+                <span class="details">Phone Number</span>
+                <input formControlName="phone" type="text" placeholder="Enter your phone number" required>
+                <small *ngIf="registerForm.controls['phone'].dirty && registerForm.hasError('required', 'phone')" >*Phone is required</small>
+              </div>
+
+              <div class="input-box underline" [class.error]="registerForm.controls['password'].dirty && registerForm.hasError('required', 'password')">
+                <span class="details">Password</span>
+                <div style="display: flex; align-items: center; border: 1px solid #ccc; border-radius: 5px;">
+                  <input style="border: none;" formControlName="password" type="{{type}}" placeholder="Enter your password" required>
+                  <span (click)="hideShowPass()" class="fa {{eyeIcon}}" style="margin-right: 10px;"></span>
+                </div>
+                <small *ngIf="registerForm.controls['password'].dirty && registerForm.hasError('required', 'password')" >*Password is required</small>
+              </div>
+
+              <div class="input-box underline" [class.error]="registerForm.controls['confirmPassword'].dirty && registerForm.hasError('required', 'confirmPassword')">
+                <span class="details">Confirm Password</span>
+                <div style="display: flex; align-items: center; border: 1px solid #ccc; border-radius: 5px;">
+                  <input style="border: none;" formControlName="confirmPassword" type="{{type}}" placeholder="Confirm your password" required>
+                  <span (click)="hideShowPass()" class="fa {{eyeIcon}}" style="margin-right: 10px;"></span>
+                </div>
+                <small *ngIf="registerForm.controls['confirmPassword'].dirty && registerForm.hasError('required', 'confirmPassword')" >*confirm Password is required</small>
+              </div>
+
+              <div class="input-box underline" [class.error]="registerForm.controls['birthday'].dirty && registerForm.hasError('required', 'birthday')">
+                <label for="birthday" style="font-weight: 500; color: var(--grey-color);">Birthday:</label>
+                <input formControlName="birthday" type="date" id="birthday" name="birthday" required>
+                <small *ngIf="registerForm.controls['birthday'].dirty && registerForm.hasError('required', 'birthday')" >*Birthday is required</small>
+              </div>
+            </div>
+
+            <div class="gender-details" [class.error]="registerForm.controls['gender'].dirty && registerForm.hasError('required', 'gender')">
+              <span style="font-weight: 500; color: var(--grey-color);">Gender</span><br>
+              <input formControlName="gender" type="radio" value="Female" style="padding: 10px"> Female
+              <input formControlName="gender" type="radio" value="Male" style="padding: 10px"> Male
+              <input formControlName="gender" type="radio" value="Prefer not to say" style="padding: 10px"> Prefer not to say
+
+            </div>
+            <small *ngIf="registerForm.controls['gender'].dirty && registerForm.hasError('required', 'gender')" >*Gender is required</small>
+
+            <div>
+              <a routerLink="/login" class="text-body"><i class="fa-solid fa-arrow-left" style="margin-left: 5px;"></i>  Back to Login</a>
+            </div>
+            <div class="button">
+              <input (click)="onSignup()" type="submit" value="Register">
+            </div>
+          </form>
+        </div>
+      </div>
+</main> -->
+<main>
+  <div class="container">
+      <div class="title">Registration</div>
+      <div class="content">
+        <form [formGroup]="registerForm">
+          <div class="user-details">
+            <div class="input-box underline" [class.error]="registerForm.controls['username'].dirty && registerForm.hasError('required', 'username')">
+              <span class="details">Username <span style="color: red;">*</span></span>
+              <input formControlName="username" type="text" [(ngModel)]="UsernameField" (ngModelChange)="checkValidUsername($event)" placeholder="Enter your username" minlength="5" maxlength="20" required>
+              <small *ngIf="registerForm.controls['username'].dirty && registerForm.hasError('required', 'username')">*Username is required</small>
+              <small *ngIf="registerForm.controls['username'].hasError('pattern')">*Username don't allow the space</small><br>
+              <small *ngIf="!isValidUsername && UsernameField">*Username length must larger than 5 and smaller than 20 characters*</small>
+            </div>
+
+
+            <div class="input-box underline">
+              <span class="details">Address</span>
+              <input formControlName="address" type="text" placeholder="Enter your address" maxlength="255">
+            </div>
+
+
+            <div class="input-box underline" [class.error]="registerForm.controls['email'].dirty && registerForm.hasError('required', 'email')">
+              <span class="details">Email <span style="color: red;">*</span></span>
+              <input formControlName="email" type="text" placeholder="Enter your email" required [(ngModel)]="EmailField" (ngModelChange)="checkValidEmail($event)">
+              <small *ngIf="registerForm.controls['email'].dirty && registerForm.hasError('required', 'email')">*Email is required</small>
+              <small *ngIf="!isValidEmail && EmailField" >*Email is invalid*</small>
+            </div>
+
+
+            <div class="input-box underline" [class.error]="registerForm.controls['phone'].dirty && registerForm.hasError('required', 'phone')">
+              <span class="details">Phone Number <span style="color: red;">*</span></span>
+              <input formControlName="phone" type="text" placeholder="Enter your phone number" required [(ngModel)]="PhoneField" (ngModelChange)="checkValidPhone($event)" min="10" maxlength="10">
+              <small *ngIf="registerForm.controls['phone'].dirty && registerForm.hasError('required', 'phone')">*Phone is required</small>
+              <small *ngIf="registerForm.controls['phone'].hasError('min')" >*Phone valid include 10 positive numbers</small>
+              <small *ngIf="!isValidPhone && PhoneField">*Phone is invalid*</small>
+            </div>
+
+
+            <div class="input-box underline" [class.error]="registerForm.controls['password'].dirty && registerForm.hasError('required', 'password')">
+              <span class="details">Password <span style="color: red;">*</span></span>
+              <div style="display: flex; align-items: center; border: 1px solid #ccc; border-radius: 5px; background-color: white; margin-left: 10px; width: 295px">
+                <input style="border: none;" formControlName="password" [(ngModel)]="PasswordField" (ngModelChange)="checkValidPassword($event)" type="{{type}}" placeholder="Enter your password" minlength="8" required>
+                <span (click)="hideShowPass()" class="fa {{eyeIcon}}" style="margin-right: 10px;"></span>
+              </div>
+              <small *ngIf="registerForm.controls['password'].dirty && registerForm.hasError('required', 'password')" >*Password is required</small>
+              <small *ngIf="!isValidPassword && PasswordField" >*Minimum password length should be 8*<br>
+                *Password should be Alphanumeric*<br>*Password should contain special chars*</small>
+            </div>
+
+
+            <div class="input-box underline" [class.error]="registerForm.controls['confirmPassword'].dirty && registerForm.hasError('required', 'confirmPassword')">
+              <span class="details">Confirm Password <span style="color: red;">*</span></span>
+<div style="display: flex; align-items: center; border: 1px solid #ccc; border-radius: 5px; background-color: white; margin-left: 10px; width: 295px  ">
+                <input style="border: none;" formControlName="confirmPassword" [(ngModel)]="ConfirmPasswordField" (ngModelChange)="checkValidConfirmPassword($event)" type="{{type}}" minlength="8" placeholder="Confirm your password" required>
+                <span (click)="hideShowPass()" class="fa {{eyeIcon}}" style="margin-right: 10px;"></span>
+              </div>
+              <small *ngIf="registerForm.controls['confirmPassword'].dirty && registerForm.hasError('required', 'confirmPassword')" >*confirm Password is required</small>
+              <small *ngIf="!isValidConfirmPassword && ConfirmPasswordField" >*Minimum password length should be 8*<br>
+                *Password should be Alphanumeric*<br>*Password should contain special chars*</small>
+            </div>
+
+            <div class="input-box underline" [class.error]="registerForm.controls['birthday'].dirty && registerForm.hasError('required', 'birthday')">
+              <label for="birthday" style="font-weight: 500; color: white;">Birthday: <span style="color: red;">*</span></label>
+              <input formControlName="birthday" type="date" id="birthday" name="birthday" required style="margin-left: 10px; width: 295px; color: gray;">
+              <small *ngIf="registerForm.controls['birthday'].dirty && registerForm.hasError('required', 'birthday')" >*Birthday is required</small>
+            </div>
+          </div>
+
+          <div class="gender-details" [class.error]="registerForm.controls['gender'].dirty && registerForm.hasError('required', 'gender')">
+            <span style="font-weight: 500; color: white;">Gender <span style="color: red;">*</span></span><br>
+            <div style="display: flex;">
+              <input formControlName="gender" type="radio" value="Female" style="margin-right: 5px; "><p style="color: white; margin-top: 15px; margin-right: 35px;">Female</p>
+              <input formControlName="gender" type="radio" value="Male" style="margin-right: 5px; "> <p style="color: white; margin-top: 15px; margin-right: 35px;">Male</p>
+              <input formControlName="gender" type="radio" value="Prefer not to say" style="margin-right: 5px;"> <p style="color: white; margin-top: 15px; margin-right: 35px;"> Prefer not to say</p></div>
+          </div>
+          <small *ngIf="registerForm.controls['gender'].dirty && registerForm.hasError('required', 'gender')" >*Gender is required</small>
+
+
+          <div>
+            <a routerLink="/login" class="text-body"><p style="color: white; text-decoration: none;"><i class="fa-solid fa-arrow-left" style="margin-right: 10px; color: white;"></i>Back to Login</p></a>
+          </div>
+          <div class="button">
+            <input (click)="onSignup()" type="submit" value="Register">
+          </div>
+        </form>
+      </div>
+    </div>
+</main>

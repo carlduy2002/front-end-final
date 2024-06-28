@@ -1,0 +1,98 @@
+<main *ngIf="role === 'Admin'">
+  <div class="table">
+      <div class="table_header">
+          <h4>Order Detail Management</h4>
+          <div>
+              <!-- <input placeholder="category"/> -->
+              <button routerLink="/view-order" class="add_new">< Back</button>
+          </div>
+      </div>
+      <div class="table_section">
+          <table>
+              <thead>
+                  <tr>
+                      <th>Order Detail ID</th>
+                      <th>Order ID</th>
+                      <th>Quantity</th>
+                      <th>Product ID</th>
+                      <th>Product Image</th>
+                      <th>Product Name</th>
+                      <th>Product Price</th>
+                      <th>Category</th>
+                      <th>Supplier</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let item of lstOrderDetail | paginate:{itemsPerPage: pageSize, currentPage: currentPage}">
+                      <td>{{item.od_id}}</td>
+                      <td>{{item.od_order_id}}</td>
+                      <td>{{item.od_quantity}}</td>
+                      <td>{{item.od_product_id}}</td>
+                      <td><img [src]="(path + item.product_image)"></td>
+                      <td>{{item.product_name}}</td>
+                      <td>${{item.product_price}}</td>
+                      <td>{{item.category_name}}</td>
+                      <td>{{item.supplier_name}}</td>
+                      <!-- <td>
+                          <button (click)="confirmOrder(item.order_id)" routerLinkActive="router-link-active" ><i class="fa-solid fa-check"></i></button>
+                          <button (click)="viewDetail(item.order_id)"><i class="fa-solid fa-circle-info"></i></button>
+                      </td> -->
+                  </tr>
+              </tbody>
+          </table>
+
+          <div class="pagination"  style="float: right;">
+            <pagination-controls (pageChange)="currentPage=$event" variant="Circular"></pagination-controls>
+          </div>
+      </div>
+  </div>
+</main>
+
+<main style="margin-top: 112px;" *ngIf="role === 'Manager'">
+  <div class="table">
+      <div class="table_header">
+          <h4>Order Detail Management</h4>
+          <div>
+              <!-- <input placeholder="category"/> -->
+              <button routerLink="/view-order" class="add_new">< Back</button>
+          </div>
+      </div>
+      <div class="table_section">
+          <table>
+              <thead>
+                  <tr>
+                      <th>Order Detail ID</th>
+                      <th>Order ID</th>
+                      <th>Quantity</th>
+                      <th>Product ID</th>
+                      <th>Product Image</th>
+                      <th>Product Name</th>
+                      <th>Product Price</th>
+                      <th>Category</th>
+                      <th>Supplier</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let item of lstOrderDetail | paginate:{itemsPerPage: pageSize, currentPage: currentPage}">
+                      <td>{{item.od_id}}</td>
+                      <td>{{item.od_order_id}}</td>
+                      <td>{{item.od_quantity}}</td>
+                      <td>{{item.od_product_id}}</td>
+                      <td><img [src]="(path + item.product_image)"></td>
+                      <td>{{item.product_name}}</td>
+                      <td>${{item.product_price}}</td>
+                      <td>{{item.category_name}}</td>
+                      <td>{{item.supplier_name}}</td>
+                      <!-- <td>
+                          <button (click)="confirmOrder(item.order_id)" routerLinkActive="router-link-active" ><i class="fa-solid fa-check"></i></button>
+                          <button (click)="viewDetail(item.order_id)"><i class="fa-solid fa-circle-info"></i></button>
+                      </td> -->
+                  </tr>
+              </tbody>
+          </table>
+          <div class="pagination"  style="float: right;">
+            <pagination-controls (pageChange)="currentPage=$event" variant="Circular"></pagination-controls>
+          </div>
+      </div>
+  </div>
+</main>

@@ -1,0 +1,68 @@
+<main>
+    <div class="container">
+        <form [formGroup]="loginForm">
+          <div class="title">Login</div>
+
+          <div class="input-box underline" [class.error]="loginForm.controls['username'].dirty && loginForm.hasError('required', 'username')">
+            <input class="fill" formControlName="username" type="text"  [(ngModel)]="UsernameField" (ngModelChange)="checkValidUsername($event)" minlength="5" maxlength="20" placeholder="Username" required />
+            <div class="underline"></div>
+            <small *ngIf="loginForm.controls['username'].dirty && loginForm.hasError('required', 'username')">*Username is required</small>
+            <small *ngIf="loginForm.controls['username'].hasError('pattern')">*Username don't allow the space</small><br>
+            <small *ngIf="!isValidUsername && UsernameField">*Username length's from 5 to 20 characters</small>
+          </div>
+
+          <div style="display: flex;" class="input-box underline" [class.error]="loginForm.controls['password'].dirty && loginForm.hasError('required', 'password')">
+            <input class="fill" formControlName="password" [(ngModel)]="PasswordField" (ngModelChange)="checkValidPassword($event)" type="{{type}}" placeholder="Password" required (input)="togglePasswordFields()"/>
+            <span (click)="hideShowPass()" class="fa {{eyeIcon}}" style="margin-top: 21px; margin-right: 10px; color: {{color}};"></span>
+            <div class="underline"></div>
+          </div>
+          <small *ngIf="loginForm.controls['password'].dirty && loginForm.hasError('required', 'password')">*Password is required</small>
+          <small *ngIf="!isValidPassword && PasswordField">*Minimum password length should be 8*<br>
+            *Password should be Alphanumeric*<br>*Password should contain special chars*</small>
+
+          <div style="margin-top: 15px;">
+            <a routerLink="/" class="text-body"><p style="color: white; text-decoration: none;"><i class="fa-solid fa-arrow-left" style="margin-right: 10px; color: white;"></i>Back to Home</p></a>
+          </div>
+
+          <div class="input-box button">
+            <input (click)="onLogin()" type="submit" name="" value="Login" />
+          </div>
+        </form>
+
+        <div class="option">Don't have an account ? <a style="color: rgb(3 198 255);" routerLink="/register">Register</a></div>
+        <div class="option">You forget password ? <a style="text-decoration: underline; color: rgb(3 198 255); cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal">Forget Password</a></div>
+      </div>
+</main>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="box-shadow: 20px 20px 80px rgb(218, 218, 218);">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Forget Password</h5>
+        <!-- <p>Please, provide your E-mail we will send the reset link</p> -->
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group pt-3">
+          <div class="input-field">
+            <span class="fa fa-envelope"></span>
+            <input [(ngModel)]="resetPasswordEmail" (keyup.enter)="confirmToSend()" (ngModelChange)="checkValidEmail($event)" type="text"
+              placeholder="Email">
+          </div>
+        </div>
+        <small *ngIf="!resetPasswordEmail" class="text-danger">*Email is required*</small>
+        <small *ngIf="!isValidEmail && resetPasswordEmail" class="text-danger">*Email is invalid*</small>
+      </div>
+
+
+
+      <div class="modal-footer">
+        <button id="btnClose" type="button" class="btn btn-secondary" style="border: none;" data-bs-dismiss="modal">Close</button>
+        <button *ngIf="disable == false" type="button" class="btn btn-primary" style="background: var(--yellow-color); border: none;" (click)="confirmToSend()">Send</button>
+        <button *ngIf="disable == true" type="button" class="btn btn-primary" style="background: var(--yellow-color); border: none;" disabled (click)="confirmToSend()">Send</button>
+      </div>
+    </div>
+  </div>
+</div>

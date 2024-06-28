@@ -1,0 +1,95 @@
+<main *ngIf="role === 'Admin'">
+  <div class="table">
+      <div class="table_header">
+          <h4>Account Management</h4>
+          <div *ngIf="role === 'Admin'">
+              <input placeholder="account"/>
+              <button routerLink="/add-account" class="add_new">+ Add New</button>
+          </div>
+      </div>
+      <div class="table_section">
+          <table>
+              <thead>
+                  <tr>
+                      <th>ID</th>
+                      <th>Username</th>
+                      <th>Email</th>
+                      <th>Address</th>
+                      <th>Phone</th>
+                      <th>Birthday</th>
+                      <th>Role</th>
+                      <th>Status</th>
+                      <th *ngIf="role === 'Admin'">Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let item of lstAccount | paginate:{itemsPerPage: pageSize, currentPage: currentPage}">
+                      <td>{{item.account_id}}</td>
+                      <td>{{item.account_username}}</td>
+                      <td>{{item.account_email}}</td>
+                      <td>{{item.account_address}}</td>
+                      <td>{{item.account_phone}}</td>
+                      <td>{{item.account_birthday | date : 'yyyy-MM-dd'}}</td>
+                      <td>{{item.role}}</td>
+                      <td>{{item.account_status}}</td>
+                      <td *ngIf="role === 'Admin'">
+                          <button *ngIf="item.account_status === 'Unlock'" (click)="banAccount(item.account_id)"><i class="fa-solid fa-lock"></i></button>
+                          <button *ngIf="item.account_status === 'Lock'" style="background-color:red; color:white;" (click)="unbanAccount(item.account_id)"><i class="fa-solid fa-lock-open"></i></button>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+          <div class="pagination"  style="float: right;">
+            <pagination-controls (pageChange)="currentPage=$event" variant="Circular"></pagination-controls>
+          </div>
+      </div>
+  </div>
+</main>
+<main style="margin-top: 112px;" *ngIf="role === 'Manager'">
+  <div class="table">
+      <div class="table_header">
+          <h4>Account Management</h4>
+          <!-- <div *ngIf="role === 'Admin'">
+              <input placeholder="account"/>
+              <button routerLink="/add-account" class="add_new">+ Add New</button>
+          </div> -->
+      </div>
+      <div class="table_section">
+          <table>
+              <thead>
+                  <tr>
+                      <th>ID</th>
+                      <th>Username</th>
+                      <th>Email</th>
+                      <th>Address</th>
+                      <th>Phone</th>
+                      <th>Birthday</th>
+                      <th>Role</th>
+                      <th>Status</th>
+                      <!-- <th *ngIf="role === 'Admin'">Actions</th> -->
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let item of lstAccount | paginate:{itemsPerPage: pageSize, currentPage: currentPage}">
+                      <td>{{item.account_id}}</td>
+                      <td>{{item.account_username}}</td>
+                      <td>{{item.account_email}}</td>
+                      <td>{{item.account_address}}</td>
+                      <td>{{item.account_phone}}</td>
+                      <td>{{item.account_birthday | date : 'yyyy-MM-dd'}}</td>
+                      <td>{{item.role}}</td>
+                      <td>{{item.account_status}}</td>
+                      <!-- <td *ngIf="role === 'Admin'">
+                          <button *ngIf="item.account_status === 'Unlock'" (click)="banAccount(item.account_id)"><i class="fa-solid fa-lock"></i></button>
+                          <button *ngIf="item.account_status === 'Lock'" style="background-color:red; color:white;" (click)="unbanAccount(item.account_id)"><i class="fa-solid fa-lock-open"></i></button>
+                      </td> -->
+                  </tr>
+              </tbody>
+          </table>
+
+          <div class="pagination"  style="float: right;">
+            <pagination-controls (pageChange)="currentPage=$event" variant="Circular"></pagination-controls>
+          </div>
+      </div>
+  </div>
+</main>

@@ -1,0 +1,82 @@
+<main *ngIf="role === 'Manager'" style="background-image: url('/assets/img/about.png'); background-repeat: no-repeat; background-position: center;
+background-size: cover;">
+  <div class="container">
+      <div class="title">Add New Category</div>
+      <div class="content">
+        <form [formGroup]="categoryForm">
+          <div class="user-details">
+            <div class="input-box" [class.error]="categoryForm.controls['category_name'].dirty && categoryForm.hasError('required', 'category_name')">
+              <span class="details">Category Name</span>
+              <input formControlName="category_name" type="text" placeholder="Enter category name" maxlength="30" required>
+              <small *ngIf="categoryForm.controls['category_name'].dirty && categoryForm.hasError('required', 'category_name')" class="text-danger">*Category Name is required</small>
+              <small *ngIf="categoryForm.controls['category_name'].hasError('max')" class="text-danger">*Max length of Category Name must be equal or smaller 30 characters</small>
+            </div>
+
+            <div class="input-box">
+              <span class="details">Decription</span>
+              <textarea formControlName="category_description" placeholder="Enter Description" maxlength="255"></textarea>
+            </div>
+
+            <!-- <div *ngIf="role === 'Admin'" class="input-box" style="margin-top: 1px;"  [class.error]="categoryForm.controls['category_status'].dirty && categoryForm.hasError('required', 'category_status')">
+              <span class="details">Status</span>
+              <select formControlName="category_status" id="select-option" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="font-size: 16px;">
+                <option selected value="0">Choose Category Status</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+              <small *ngIf="categoryForm.controls['category_status'].dirty && categoryForm.hasError('required', 'category_status')" class="text-danger">*Category status is required</small>
+            </div> -->
+          </div>
+
+          <div style="margin-top: 20px;">
+            <a routerLink="/view-category" class="text-body"><i class="fa-solid fa-arrow-left" style="margin-left: 5px;"></i>  Back</a>
+          </div>
+
+          <div class="button">
+            <input (click)="addCategory()" type="submit" value="Save">
+          </div>
+        </form>
+      </div>
+    </div>
+</main>
+
+<main *ngIf="role === 'Admin'" style="background-color: white">
+  <div class="container" style="margin-bottom: 360px;">
+      <div class="title">Add New Category</div>
+      <div class="content">
+        <form [formGroup]="categoryForm">
+          <div class="user-details">
+            <div class="input-box" [class.error]="categoryForm.controls['category_name'].dirty && categoryForm.hasError('required', 'category_name')">
+              <span class="details">Category Name</span>
+              <input formControlName="category_name" type="text" placeholder="Enter category name" maxlength="30" required>
+              <small *ngIf="categoryForm.controls['category_name'].dirty && categoryForm.hasError('required', 'category_name')" class="text-danger">*Category Name is required</small>
+              <small *ngIf="categoryForm.controls['category_name'].hasError('max')" class="text-danger">*Max length of Category Name must be equal or smaller 30 characters</small>
+            </div>
+
+            <div class="input-box">
+              <span class="details">Decription</span>
+              <textarea formControlName="category_description" placeholder="Enter Description" maxlength="255"></textarea>
+            </div>
+
+            <div *ngIf="role === 'Admin'" class="input-box" style="margin-top: 1px;"  [class.error]="categoryForm.controls['category_status'].dirty && categoryForm.hasError('required', 'category_status')">
+              <span class="details">Status</span>
+              <select formControlName="category_status" id="select-option" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" style="font-size: 16px;">
+                <option selected value="0" disabled>Choose Category Status</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+              <small *ngIf="categoryForm.controls['category_status'].dirty && categoryForm.hasError('required', 'category_status')" class="text-danger">*Category status is required</small>
+            </div>
+          </div>
+
+          <div style="margin-top: 20px;">
+            <a routerLink="/view-category" class="text-body"><i class="fa-solid fa-arrow-left" style="margin-left: 5px;"></i>  Back</a>
+          </div>
+
+          <div class="button">
+            <input (click)="addCategory()" type="submit" value="Add">
+          </div>
+        </form>
+      </div>
+    </div>
+</main>
